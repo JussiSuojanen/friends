@@ -23,15 +23,15 @@
                             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         </view>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="friendCell" rowHeight="80" id="gHq-b1-ju0" customClass="FriendTableViewCell" customModule="Friends" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="friendCell" rowHeight="80" id="gHq-b1-ju0" customClass="FriendTableViewCell" customModule="Friends" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gHq-b1-ju0" id="NmY-jG-LCN">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="79.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="342" height="79"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&lt;phonenumber&gt;" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vub-tL-VEj">
-                                            <rect key="frame" x="238" y="29" width="129" height="21"/>
+                                            <rect key="frame" x="205" y="29" width="129" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
@@ -54,6 +54,7 @@
                                         <constraint firstItem="Vub-tL-VEj" firstAttribute="centerY" secondItem="UFP-T0-vJt" secondAttribute="centerY" id="w6e-hd-JjP"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <outlet property="labelFullName" destination="UFP-T0-vJt" id="qkx-iu-aBS"/>
                                     <outlet property="labelPhoneNumber" destination="Vub-tL-VEj" id="MwB-cY-Sbr"/>
@@ -231,7 +232,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1191" y="230"/>
+            <point key="canvasLocation" x="1351" y="230"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Apq-uT-2Ez">
@@ -250,7 +251,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YOm-WG-m22" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="177" y="230"/>
+            <point key="canvasLocation" x="-18" y="230"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>

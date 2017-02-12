@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7B02665814051F5B52B903CE /* Pods_Friends.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0FA5A5299F23EA4A51D01E9 /* Pods_Friends.framework */; };
-		F43D01D11E1FBCDC004084C4 /* AddFriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43D01D01E1FBCDC004084C4 /* AddFriendViewController.swift */; };
+		F43D01D11E1FBCDC004084C4 /* FriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43D01D01E1FBCDC004084C4 /* FriendViewController.swift */; };
 		F43D01D31E1FBCF1004084C4 /* AddFriendViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43D01D21E1FBCF1004084C4 /* AddFriendViewModel.swift */; };
 		F43D01D61E21383E004084C4 /* Bindable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43D01D51E21383E004084C4 /* Bindable.swift */; };
 		F43D01D81E23E11C004084C4 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43D01D71E23E11C004084C4 /* Alert.swift */; };
@@ -50,7 +50,7 @@
 		462CD10843584CD49E309B26 /* Pods-Friends.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Friends.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Friends/Pods-Friends.debug.xcconfig"; sourceTree = "<group>"; };
 		D0FA5A5299F23EA4A51D01E9 /* Pods_Friends.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Friends.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA78883A3DB03A18621875BA /* Pods-Friends.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Friends.release.xcconfig"; path = "Pods/Target Support Files/Pods-Friends/Pods-Friends.release.xcconfig"; sourceTree = "<group>"; };
-		F43D01D01E1FBCDC004084C4 /* AddFriendViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddFriendViewController.swift; sourceTree = "<group>"; };
+		F43D01D01E1FBCDC004084C4 /* FriendViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendViewController.swift; sourceTree = "<group>"; };
 		F43D01D21E1FBCF1004084C4 /* AddFriendViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddFriendViewModel.swift; sourceTree = "<group>"; };
 		F43D01D51E21383E004084C4 /* Bindable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bindable.swift; sourceTree = "<group>"; };
 		F43D01D71E23E11C004084C4 /* Alert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
@@ -169,7 +169,7 @@
 		F4A647691DD6006600F89F45 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				F43D01D01E1FBCDC004084C4 /* AddFriendViewController.swift */,
+				F43D01D01E1FBCDC004084C4 /* FriendViewController.swift */,
 				F4C566631DD0E9F600E61578 /* FriendsTableViewController.swift */,
 			);
 			name = ViewController;
@@ -425,7 +425,7 @@
 				F43D01D61E21383E004084C4 /* Bindable.swift in Sources */,
 				F442146E1E4624340006E18F /* JSON.swift in Sources */,
 				F442146C1E4622990006E18F /* Result.swift in Sources */,
-				F43D01D11E1FBCDC004084C4 /* AddFriendViewController.swift in Sources */,
+				F43D01D11E1FBCDC004084C4 /* FriendViewController.swift in Sources */,
 				F4A647621DD362F100F89F45 /* Friend.swift in Sources */,
 				F44214701E4B629D0006E18F /* UpdateFriendViewModel.swift in Sources */,
 				F4C566641DD0E9F600E61578 /* FriendsTableViewController.swift in Sources */,

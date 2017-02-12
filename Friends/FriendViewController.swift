@@ -1,5 +1,5 @@
 //
-//  AddFriendViewController.swift
+//  FriendViewController.swift
 //  Friends
 //
 //  Created by Jussi Suojanen on 06/01/17.
@@ -13,7 +13,7 @@ protocol RefreshFriendData {
     var updateFriends: (() -> Void)? { get set }
 }
 
-final class AddFriendViewController: UIViewController, RefreshFriendData {
+final class FriendViewController: UIViewController, RefreshFriendData {
     @IBOutlet weak var textFieldFirstname: UITextField! {
         didSet {
             textFieldFirstname.delegate = self
@@ -100,7 +100,7 @@ final class AddFriendViewController: UIViewController, RefreshFriendData {
 }
 
 // MARK: - Actions
-extension AddFriendViewController {
+extension FriendViewController {
     @IBAction func rootViewTapped(_ sender: Any) {
         activeTextField?.resignFirstResponder()
     }
@@ -109,7 +109,7 @@ extension AddFriendViewController {
     }
 }
 
-extension AddFriendViewController: UITextFieldDelegate {
+extension FriendViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return false

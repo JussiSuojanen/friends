@@ -84,7 +84,7 @@
         <!--Add friend-->
         <scene sceneID="vVo-q0-DOm">
             <objects>
-                <viewController title="Add friend" id="WEH-2E-ThT" customClass="AddFriendViewController" customModule="Friends" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Add friend" id="WEH-2E-ThT" customClass="FriendViewController" customModule="Friends" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="JUc-9P-odv"/>
                         <viewControllerLayoutGuide type="bottom" id="qzo-oh-c4W"/>

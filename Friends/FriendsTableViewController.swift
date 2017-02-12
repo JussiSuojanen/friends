@@ -42,7 +42,7 @@ class FriendsTableViewController: UITableViewController {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "friendsToAddFriend",
-            let destinationViewController = segue.destination as? AddFriendViewController {
+            let destinationViewController = segue.destination as? FriendViewController {
             destinationViewController.viewModel = AddFriendViewModel()
             destinationViewController.updateFriends = { [weak self] in
                 self?.viewModel.getFriends()
@@ -50,7 +50,7 @@ class FriendsTableViewController: UITableViewController {
         }
 
         if segue.identifier == "friendToUpdateFriend",
-            let destinationViewController = segue.destination as? AddFriendViewController,
+            let destinationViewController = segue.destination as? FriendViewController,
             let indexPath = tableView.indexPathForSelectedRow {
 
             switch viewModel.friendCells.value[indexPath.row] {

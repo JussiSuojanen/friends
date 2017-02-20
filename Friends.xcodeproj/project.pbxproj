@@ -18,7 +18,7 @@
 		F4A647621DD362F100F89F45 /* Friend.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A647611DD362F100F89F45 /* Friend.swift */; };
 		F4A647651DD5F42400F89F45 /* FriendTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A647641DD5F42400F89F45 /* FriendTableViewCell.swift */; };
 		F4A647671DD5F43600F89F45 /* FriendCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A647661DD5F43600F89F45 /* FriendCellViewModel.swift */; };
-		F4A6476B1DD6007E00F89F45 /* FriendsTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A6476A1DD6007E00F89F45 /* FriendsTableViewModel.swift */; };
+		F4A6476B1DD6007E00F89F45 /* FriendsTableViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A6476A1DD6007E00F89F45 /* FriendsTableViewViewModel.swift */; };
 		F4C566621DD0E9F600E61578 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C566611DD0E9F600E61578 /* AppDelegate.swift */; };
 		F4C566641DD0E9F600E61578 /* FriendsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C566631DD0E9F600E61578 /* FriendsTableViewController.swift */; };
 		F4C566671DD0E9F600E61578 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F4C566651DD0E9F600E61578 /* Main.storyboard */; };
@@ -60,7 +60,7 @@
 		F4A647611DD362F100F89F45 /* Friend.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Friend.swift; sourceTree = "<group>"; };
 		F4A647641DD5F42400F89F45 /* FriendTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendTableViewCell.swift; sourceTree = "<group>"; };
 		F4A647661DD5F43600F89F45 /* FriendCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendCellViewModel.swift; sourceTree = "<group>"; };
-		F4A6476A1DD6007E00F89F45 /* FriendsTableViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsTableViewModel.swift; sourceTree = "<group>"; };
+		F4A6476A1DD6007E00F89F45 /* FriendsTableViewViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsTableViewViewModel.swift; sourceTree = "<group>"; };
 		F4C5665E1DD0E9F600E61578 /* Friends.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Friends.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4C566611DD0E9F600E61578 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F4C566631DD0E9F600E61578 /* FriendsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsTableViewController.swift; sourceTree = "<group>"; };
@@ -152,7 +152,7 @@
 			children = (
 				F43D01D21E1FBCF1004084C4 /* AddFriendViewModel.swift */,
 				F4A647661DD5F43600F89F45 /* FriendCellViewModel.swift */,
-				F4A6476A1DD6007E00F89F45 /* FriendsTableViewModel.swift */,
+				F4A6476A1DD6007E00F89F45 /* FriendsTableViewViewModel.swift */,
 				F442146F1E4B629D0006E18F /* UpdateFriendViewModel.swift */,
 			);
 			name = ViewModel;
@@ -434,7 +434,7 @@
 				F4A647671DD5F43600F89F45 /* FriendCellViewModel.swift in Sources */,
 				F43D01D31E1FBCF1004084C4 /* AddFriendViewModel.swift in Sources */,
 				F43D01D81E23E11C004084C4 /* Alert.swift in Sources */,
-				F4A6476B1DD6007E00F89F45 /* FriendsTableViewModel.swift in Sources */,
+				F4A6476B1DD6007E00F89F45 /* FriendsTableViewViewModel.swift in Sources */,
 				F4C566901DD0EB3C00E61578 /* AppServerClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

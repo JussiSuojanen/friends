@@ -11,7 +11,7 @@ import PKHUD
 
 class FriendsTableViewController: UITableViewController {
 
-    let viewModel: FriendsTableViewModel = FriendsTableViewModel()
+    let viewModel: FriendsTableViewViewModel = FriendsTableViewViewModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()

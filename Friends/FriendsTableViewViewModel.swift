@@ -1,12 +1,12 @@
 //
-//  FriendsTableViewModel.swift
+//  FriendsTableViewViewModel.swift
 //  Friends
 //
 //  Created by Jussi Suojanen on 11/11/16.
 //  Copyright © 2016 Jimmy. All rights reserved.
 //
 
-class FriendsTableViewModel {
+class FriendsTableViewViewModel {
 
     enum FriendTableViewCellType {
         case normal(cellViewModel: FriendCellViewModel)

@@ -89,7 +89,7 @@ final class AddFriendViewModel: FriendViewModel {
     }
 }
 
-extension AppServerClient.PostFriendFailureReason {
+private extension AppServerClient.PostFriendFailureReason {
     func getErrorMessage() -> String? {
         switch self {
         case .unAuthorized:

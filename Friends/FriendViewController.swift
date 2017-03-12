@@ -44,10 +44,6 @@ final class FriendViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        if viewModel == nil {
-            viewModel = AddFriendViewModel()
-        }
-
         bindViewModel()
     }
 
@@ -105,6 +101,7 @@ extension FriendViewController {
     }
 }
 
+// MARK: - UITextFieldDelegate
 extension FriendViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()

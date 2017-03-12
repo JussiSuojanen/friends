@@ -9,11 +9,7 @@
 import UIKit
 import PKHUD
 
-protocol RefreshFriendData {
-    var updateFriends: (() -> Void)? { get set }
-}
-
-final class FriendViewController: UIViewController, RefreshFriendData {
+final class FriendViewController: UIViewController {
     @IBOutlet weak var textFieldFirstname: UITextField! {
         didSet {
             textFieldFirstname.delegate = self

@@ -15,7 +15,7 @@ class FriendsTableViewViewModel {
     }
 
     var onShowError: ((_ alert: SingleButtonAlert) -> Void)?
-    var showLoadingHud: Bindable = Bindable(false)
+    let showLoadingHud: Bindable = Bindable(false)
 
     let friendCells = Bindable([FriendTableViewCellType]())
     let appServerClient = AppServerClient()

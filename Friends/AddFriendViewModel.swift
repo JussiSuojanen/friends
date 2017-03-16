@@ -11,7 +11,7 @@ protocol FriendViewModel {
     var firstname: String? { get set }
     var lastname: String? { get set }
     var phonenumber: String? { get set }
-    var showLoadingHud: Bindable<Bool> { get set }
+    var showLoadingHud: Bindable<Bool> { get }
 
     var updateSubmitButtonState: ((Bool) -> ())? { get set }
     var navigateBack: (() -> ())?  { get set }
@@ -39,7 +39,7 @@ final class AddFriendViewModel: FriendViewModel {
             validateInput()
         }
     }
-    var showLoadingHud: Bindable = Bindable(false)
+    let showLoadingHud: Bindable = Bindable(false)
 
     var updateSubmitButtonState: ((Bool) -> ())?
     var navigateBack: (() -> ())?

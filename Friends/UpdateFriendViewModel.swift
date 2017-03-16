@@ -34,12 +34,12 @@ final class UpdateFriendViewModel: FriendViewModel {
             }
         }
     }
-    var showLoadingHud = Bindable(false)
 
     var updateSubmitButtonState: ((Bool) -> ())?
     var navigateBack: (() -> ())?
     var onShowError: ((_ alert: SingleButtonAlert) -> Void)?
 
+    let showLoadingHud = Bindable(false)
     let appServerClient = AppServerClient()
 
     init(friend: Friend) {

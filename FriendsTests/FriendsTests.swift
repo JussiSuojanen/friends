@@ -9,24 +9,22 @@
 import XCTest
 
 class FriendsTests: XCTestCase {
-    
-    override func setUp() {
-        super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-    
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
-    }
-    
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-    
-    func testPerformanceExample() {
 
+    func testSuccessfulInit() {
+        let testSuccessfulJSON: JSON = ["id": 1,
+                                    "firstname": "Jimmy",
+                                    "lastname": "Swifty",
+                                    "phonenumber": "0501234567"]
+
+        XCTAssertNotNil(Friend(json: testSuccessfulJSON))
     }
-    
+
+    func testFailInit() {
+        let testFailJSON: JSON = ["id": 1,
+                                    "firstnamee": "Jimmy",
+                                    "lastnamee": "Swifty",
+                                    "phonenumbere": "0501234567"]
+
+        XCTAssertNil(Friend(json: testFailJSON))
+    }
 }

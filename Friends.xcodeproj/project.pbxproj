@@ -9,6 +9,12 @@
 /* Begin PBXBuildFile section */
 		419C8B16C634AD43362189E0 /* Pods_FriendsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 321AC0C6D06B05CDCFD11BD0 /* Pods_FriendsTests.framework */; };
 		7B02665814051F5B52B903CE /* Pods_Friends.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0FA5A5299F23EA4A51D01E9 /* Pods_Friends.framework */; };
+		F4027EF11EA4CC2A00191D52 /* FriendsTableViewViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4027EF01EA4CC2A00191D52 /* FriendsTableViewViewModelTests.swift */; };
+		F4027EF41EA4CE8D00191D52 /* MockFriend.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4027EF31EA4CE8D00191D52 /* MockFriend.swift */; };
+		F4027EF51EA4D03F00191D52 /* FriendsTableViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A6476A1DD6007E00F89F45 /* FriendsTableViewViewModel.swift */; };
+		F4027EF61EA4D15100191D52 /* Bindable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43D01D51E21383E004084C4 /* Bindable.swift */; };
+		F4027EF71EA4D15500191D52 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43D01D71E23E11C004084C4 /* Alert.swift */; };
+		F4027EF81EA4D15A00191D52 /* FriendCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A647661DD5F43600F89F45 /* FriendCellViewModel.swift */; };
 		F43D01D11E1FBCDC004084C4 /* FriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43D01D01E1FBCDC004084C4 /* FriendViewController.swift */; };
 		F43D01D31E1FBCF1004084C4 /* AddFriendViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43D01D21E1FBCF1004084C4 /* AddFriendViewModel.swift */; };
 		F43D01D61E21383E004084C4 /* Bindable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43D01D51E21383E004084C4 /* Bindable.swift */; };
@@ -57,6 +63,8 @@
 		D0FA5A5299F23EA4A51D01E9 /* Pods_Friends.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Friends.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA78883A3DB03A18621875BA /* Pods-Friends.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Friends.release.xcconfig"; path = "Pods/Target Support Files/Pods-Friends/Pods-Friends.release.xcconfig"; sourceTree = "<group>"; };
 		E579CFFD65CA5DC90F63BC2D /* Pods-FriendsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FriendsTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-FriendsTests/Pods-FriendsTests.release.xcconfig"; sourceTree = "<group>"; };
+		F4027EF01EA4CC2A00191D52 /* FriendsTableViewViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsTableViewViewModelTests.swift; sourceTree = "<group>"; };
+		F4027EF31EA4CE8D00191D52 /* MockFriend.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockFriend.swift; sourceTree = "<group>"; };
 		F43D01D01E1FBCDC004084C4 /* FriendViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendViewController.swift; sourceTree = "<group>"; };
 		F43D01D21E1FBCF1004084C4 /* AddFriendViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddFriendViewModel.swift; sourceTree = "<group>"; };
 		F43D01D51E21383E004084C4 /* Bindable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bindable.swift; sourceTree = "<group>"; };
@@ -130,6 +138,22 @@
 				E579CFFD65CA5DC90F63BC2D /* Pods-FriendsTests.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		F4027EEF1EA4CC0A00191D52 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				F4027EF01EA4CC2A00191D52 /* FriendsTableViewViewModelTests.swift */,
+			);
+			name = ViewModel;
+			sourceTree = "<group>";
+		};
+		F4027EF21EA4CE6C00191D52 /* Mock */ = {
+			isa = PBXGroup;
+			children = (
+				F4027EF31EA4CE8D00191D52 /* MockFriend.swift */,
+			);
+			name = Mock;
 			sourceTree = "<group>";
 		};
 		F43D01D41E21382A004084C4 /* Helpers */ = {
@@ -230,6 +254,8 @@
 		F4C566751DD0E9F600E61578 /* FriendsTests */ = {
 			isa = PBXGroup;
 			children = (
+				F4027EF21EA4CE6C00191D52 /* Mock */,
+				F4027EEF1EA4CC0A00191D52 /* ViewModel */,
 				F4C566761DD0E9F600E61578 /* FriendsTests.swift */,
 				F4C566781DD0E9F600E61578 /* Info.plist */,
 			);
@@ -505,9 +531,15 @@
 			files = (
 				F4E46A4D1EA4C03C00D9675A /* Friend.swift in Sources */,
 				F4E46A511EA4C29100D9675A /* Result.swift in Sources */,
+				F4027EF11EA4CC2A00191D52 /* FriendsTableViewViewModelTests.swift in Sources */,
 				F4C566771DD0E9F600E61578 /* FriendsTests.swift in Sources */,
+				F4027EF51EA4D03F00191D52 /* FriendsTableViewViewModel.swift in Sources */,
 				F4E46A4C1EA4C02000D9675A /* AppServerClient.swift in Sources */,
+				F4027EF41EA4CE8D00191D52 /* MockFriend.swift in Sources */,
 				F4E46A501EA4C12D00D9675A /* JSON.swift in Sources */,
+				F4027EF81EA4D15A00191D52 /* FriendCellViewModel.swift in Sources */,
+				F4027EF71EA4D15500191D52 /* Alert.swift in Sources */,
+				F4027EF61EA4D15100191D52 /* Bindable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

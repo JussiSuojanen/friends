@@ -18,7 +18,11 @@ class FriendsTableViewViewModel {
     let showLoadingHud: Bindable = Bindable(false)
 
     let friendCells = Bindable([FriendTableViewCellType]())
-    let appServerClient = AppServerClient()
+    let appServerClient: AppServerClient
+
+    init(appServerClient: AppServerClient = AppServerClient()) {
+        self.appServerClient = appServerClient
+    }
 
     func getFriends() {
         showLoadingHud.value = true

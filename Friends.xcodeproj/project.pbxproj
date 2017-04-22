@@ -26,6 +26,8 @@
 		F4A647651DD5F42400F89F45 /* FriendTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A647641DD5F42400F89F45 /* FriendTableViewCell.swift */; };
 		F4A647671DD5F43600F89F45 /* FriendCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A647661DD5F43600F89F45 /* FriendCellViewModel.swift */; };
 		F4A6476B1DD6007E00F89F45 /* FriendsTableViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A6476A1DD6007E00F89F45 /* FriendsTableViewViewModel.swift */; };
+		F4B59A6E1EAB477B0038F484 /* AddFriendViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B59A6D1EAB477B0038F484 /* AddFriendViewModelTests.swift */; };
+		F4B59A6F1EAB47D40038F484 /* AddFriendViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43D01D21E1FBCF1004084C4 /* AddFriendViewModel.swift */; };
 		F4C566621DD0E9F600E61578 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C566611DD0E9F600E61578 /* AppDelegate.swift */; };
 		F4C566641DD0E9F600E61578 /* FriendsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C566631DD0E9F600E61578 /* FriendsTableViewController.swift */; };
 		F4C566671DD0E9F600E61578 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F4C566651DD0E9F600E61578 /* Main.storyboard */; };
@@ -76,6 +78,7 @@
 		F4A647641DD5F42400F89F45 /* FriendTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendTableViewCell.swift; sourceTree = "<group>"; };
 		F4A647661DD5F43600F89F45 /* FriendCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendCellViewModel.swift; sourceTree = "<group>"; };
 		F4A6476A1DD6007E00F89F45 /* FriendsTableViewViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsTableViewViewModel.swift; sourceTree = "<group>"; };
+		F4B59A6D1EAB477B0038F484 /* AddFriendViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddFriendViewModelTests.swift; sourceTree = "<group>"; };
 		F4C5665E1DD0E9F600E61578 /* Friends.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Friends.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4C566611DD0E9F600E61578 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F4C566631DD0E9F600E61578 /* FriendsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsTableViewController.swift; sourceTree = "<group>"; };
@@ -144,6 +147,7 @@
 			isa = PBXGroup;
 			children = (
 				F4027EF01EA4CC2A00191D52 /* FriendsTableViewViewModelTests.swift */,
+				F4B59A6D1EAB477B0038F484 /* AddFriendViewModelTests.swift */,
 			);
 			name = ViewModel;
 			sourceTree = "<group>";
@@ -537,9 +541,11 @@
 				F4E46A4C1EA4C02000D9675A /* AppServerClient.swift in Sources */,
 				F4027EF41EA4CE8D00191D52 /* MockFriend.swift in Sources */,
 				F4E46A501EA4C12D00D9675A /* JSON.swift in Sources */,
+				F4B59A6E1EAB477B0038F484 /* AddFriendViewModelTests.swift in Sources */,
 				F4027EF81EA4D15A00191D52 /* FriendCellViewModel.swift in Sources */,
 				F4027EF71EA4D15500191D52 /* Alert.swift in Sources */,
 				F4027EF61EA4D15100191D52 /* Bindable.swift in Sources */,
+				F4B59A6F1EAB47D40038F484 /* AddFriendViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

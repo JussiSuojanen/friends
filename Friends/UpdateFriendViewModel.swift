@@ -40,13 +40,14 @@ final class UpdateFriendViewModel: FriendViewModel {
     var onShowError: ((_ alert: SingleButtonAlert) -> Void)?
 
     let showLoadingHud = Bindable(false)
-    let appServerClient = AppServerClient()
+    let appServerClient: AppServerClient
 
-    init(friend: Friend) {
+    init(friend: Friend, appServerClient: AppServerClient = AppServerClient()) {
         self.friend = friend
         self.firstname = friend.firstname
         self.lastname = friend.lastname
         self.phonenumber = friend.phonenumber
+        self.appServerClient = appServerClient
     }
 
     func submitFriend() {

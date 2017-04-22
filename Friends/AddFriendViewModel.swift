@@ -39,19 +39,23 @@ final class AddFriendViewModel: FriendViewModel {
             validateInput()
         }
     }
-    let showLoadingHud: Bindable = Bindable(false)
-
     var updateSubmitButtonState: ((Bool) -> ())?
     var navigateBack: (() -> ())?
     var onShowError: ((_ alert: SingleButtonAlert) -> Void)?
 
-    private let appServerClient = AppServerClient()
+    let showLoadingHud: Bindable = Bindable(false)
+
+    private let appServerClient: AppServerClient
     private var validInputData: Bool = false {
         didSet {
             if oldValue != validInputData {
                 updateSubmitButtonState?(validInputData)
             }
         }
+    }
+
+    init(appServerClient: AppServerClient = AppServerClient()) {
+        self.appServerClient = appServerClient
     }
 
     func submitFriend() {

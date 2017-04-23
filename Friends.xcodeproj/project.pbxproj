@@ -43,6 +43,7 @@
 		F4E46A501EA4C12D00D9675A /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = F442146D1E4624340006E18F /* JSON.swift */; };
 		F4E46A511EA4C29100D9675A /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = F442146B1E4622990006E18F /* Result.swift */; };
 		F4F797C31EAD35FD00B6390D /* AlertTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F797C21EAD35FD00B6390D /* AlertTests.swift */; };
+		F4F797C51EAD36CC00B6390D /* BindableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F797C41EAD36CC00B6390D /* BindableTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -98,6 +99,7 @@
 		F4C566831DD0E9F600E61578 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F4C5668F1DD0EB3C00E61578 /* AppServerClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppServerClient.swift; sourceTree = "<group>"; };
 		F4F797C21EAD35FD00B6390D /* AlertTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertTests.swift; sourceTree = "<group>"; };
+		F4F797C41EAD36CC00B6390D /* BindableTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BindableTests.swift; sourceTree = "<group>"; };
 		F6DE01E32E6513598B5206CA /* Pods-FriendsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FriendsTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FriendsTests/Pods-FriendsTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -286,6 +288,7 @@
 			isa = PBXGroup;
 			children = (
 				F4F797C21EAD35FD00B6390D /* AlertTests.swift */,
+				F4F797C41EAD36CC00B6390D /* BindableTests.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -556,6 +559,7 @@
 				F4B59A721EAB4E230038F484 /* UpdateFriendViewModel.swift in Sources */,
 				F4F797C31EAD35FD00B6390D /* AlertTests.swift in Sources */,
 				F4027EF51EA4D03F00191D52 /* FriendsTableViewViewModel.swift in Sources */,
+				F4F797C51EAD36CC00B6390D /* BindableTests.swift in Sources */,
 				F4E46A4C1EA4C02000D9675A /* AppServerClient.swift in Sources */,
 				F4027EF41EA4CE8D00191D52 /* MockFriend.swift in Sources */,
 				F4E46A501EA4C12D00D9675A /* JSON.swift in Sources */,

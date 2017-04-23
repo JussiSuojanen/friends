@@ -14,6 +14,7 @@ class FriendsTableViewViewModelTests: XCTestCase {
     func testNormalFriendCells() {
         let appServerClient = MockAppServerClient()
         appServerClient.getFriendsResult = .success(payload: [Friend.with()])
+
         let viewModel = FriendsTableViewViewModel(appServerClient: appServerClient)
         viewModel.getFriends()
 
@@ -26,6 +27,7 @@ class FriendsTableViewViewModelTests: XCTestCase {
     func testEmptyFriendCells() {
         let appServerClient = MockAppServerClient()
         appServerClient.getFriendsResult = .success(payload: [])
+
         let viewModel = FriendsTableViewViewModel(appServerClient: appServerClient)
         viewModel.getFriends()
 
@@ -38,6 +40,7 @@ class FriendsTableViewViewModelTests: XCTestCase {
     func testErrorFriendCells() {
         let appServerClient = MockAppServerClient()
         appServerClient.getFriendsResult = .failure(AppServerClient.GetFriendsFailureReason.notFound)
+
         let viewModel = FriendsTableViewViewModel(appServerClient: appServerClient)
         viewModel.getFriends()
 
@@ -48,15 +51,29 @@ class FriendsTableViewViewModelTests: XCTestCase {
     }
 
     // MARK: - Delete friend
+    func testDeleteFriendSuccess() {
+        let appServerClient = MockAppServerClient()
+        appServerClient.deleteFriendResult = .success
+        appServerClient.getFriendsResult = .success(payload: [])
+
+        let viewModel = FriendsTableViewViewModel(appServerClient: appServerClient)
+        viewModel.friendCells.value = [Friend.with()].flatMap { .normal(cellViewModel: $0 as FriendCellViewModel)}
+
+        viewModel.deleteFriend(at: 0)
+    }
+
     func testDeleteFriendFailure() {
         let appServerClient = MockAppServerClient()
         appServerClient.deleteFriendResult = .failure(AppServerClient.DeleteFriendFailureReason.notFound)
+
         let viewModel = FriendsTableViewViewModel(appServerClient: appServerClient)
         viewModel.friendCells.value = [Friend.with()].flatMap { .normal(cellViewModel: $0 as FriendCellViewModel)}
+
         let expectErrorShown = expectation(description: "Error note is shown")
         viewModel.onShowError = { _ in
             expectErrorShown.fulfill()
         }
+
         viewModel.deleteFriend(at: 0)
 
         waitForExpectations(timeout: 0.1, handler: nil)

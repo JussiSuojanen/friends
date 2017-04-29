@@ -35,7 +35,7 @@
 		F4C566671DD0E9F600E61578 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F4C566651DD0E9F600E61578 /* Main.storyboard */; };
 		F4C566691DD0E9F600E61578 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F4C566681DD0E9F600E61578 /* Assets.xcassets */; };
 		F4C5666C1DD0E9F600E61578 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F4C5666A1DD0E9F600E61578 /* LaunchScreen.storyboard */; };
-		F4C566771DD0E9F600E61578 /* FriendsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C566761DD0E9F600E61578 /* FriendsTests.swift */; };
+		F4C566771DD0E9F600E61578 /* FriendTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C566761DD0E9F600E61578 /* FriendTests.swift */; };
 		F4C566821DD0E9F600E61578 /* FriendsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C566811DD0E9F600E61578 /* FriendsUITests.swift */; };
 		F4C566901DD0EB3C00E61578 /* AppServerClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C5668F1DD0EB3C00E61578 /* AppServerClient.swift */; };
 		F4E46A4C1EA4C02000D9675A /* AppServerClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C5668F1DD0EB3C00E61578 /* AppServerClient.swift */; };
@@ -92,7 +92,7 @@
 		F4C5666B1DD0E9F600E61578 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F4C5666D1DD0E9F600E61578 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F4C566721DD0E9F600E61578 /* FriendsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FriendsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		F4C566761DD0E9F600E61578 /* FriendsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsTests.swift; sourceTree = "<group>"; };
+		F4C566761DD0E9F600E61578 /* FriendTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendTests.swift; sourceTree = "<group>"; };
 		F4C566781DD0E9F600E61578 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F4C5667D1DD0E9F600E61578 /* FriendsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FriendsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4C566811DD0E9F600E61578 /* FriendsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsUITests.swift; sourceTree = "<group>"; };
@@ -266,10 +266,10 @@
 		F4C566751DD0E9F600E61578 /* FriendsTests */ = {
 			isa = PBXGroup;
 			children = (
+				F4F797C61EB4A10D00B6390D /* Model */,
 				F4F797C11EAD35E700B6390D /* Helpers */,
 				F4027EF21EA4CE6C00191D52 /* Mock */,
 				F4027EEF1EA4CC0A00191D52 /* ViewModel */,
-				F4C566761DD0E9F600E61578 /* FriendsTests.swift */,
 				F4C566781DD0E9F600E61578 /* Info.plist */,
 			);
 			path = FriendsTests;
@@ -291,6 +291,14 @@
 				F4F797C41EAD36CC00B6390D /* BindableTests.swift */,
 			);
 			name = Helpers;
+			sourceTree = "<group>";
+		};
+		F4F797C61EB4A10D00B6390D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				F4C566761DD0E9F600E61578 /* FriendTests.swift */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -555,7 +563,7 @@
 				F4E46A511EA4C29100D9675A /* Result.swift in Sources */,
 				F4B59A711EAB4D230038F484 /* UpdateFriendViewModelTests.swift in Sources */,
 				F4027EF11EA4CC2A00191D52 /* FriendsTableViewViewModelTests.swift in Sources */,
-				F4C566771DD0E9F600E61578 /* FriendsTests.swift in Sources */,
+				F4C566771DD0E9F600E61578 /* FriendTests.swift in Sources */,
 				F4B59A721EAB4E230038F484 /* UpdateFriendViewModel.swift in Sources */,
 				F4F797C31EAD35FD00B6390D /* AlertTests.swift in Sources */,
 				F4027EF51EA4D03F00191D52 /* FriendsTableViewViewModel.swift in Sources */,

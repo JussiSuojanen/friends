@@ -1,6 +1,6 @@
 //
-//  FriendsTests.swift
-//  FriendsTests
+//  FriendTests.swift
+//  FriendTests
 //
 //  Created by Jussi Suojanen on 07/11/16.
 //  Copyright © 2016 Jimmy. All rights reserved.
@@ -8,7 +8,7 @@
 
 import XCTest
 
-class FriendsTests: XCTestCase {
+class FriendTests: XCTestCase {
 
     func testSuccessfulInit() {
         let testSuccessfulJSON: JSON = ["id": 1,

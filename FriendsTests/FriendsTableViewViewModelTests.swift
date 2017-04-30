@@ -54,12 +54,23 @@ class FriendsTableViewViewModelTests: XCTestCase {
     func testDeleteFriendSuccess() {
         let appServerClient = MockAppServerClient()
         appServerClient.deleteFriendResult = .success
-        appServerClient.getFriendsResult = .success(payload: [])
+        appServerClient.getFriendsResult = .success(payload: [Friend.with()])
 
         let viewModel = FriendsTableViewViewModel(appServerClient: appServerClient)
-        viewModel.friendCells.value = [Friend.with()].flatMap { .normal(cellViewModel: $0 as FriendCellViewModel)}
+        viewModel.getFriends()
 
+        guard case .some(.normal(_)) = viewModel.friendCells.value.first else {
+            XCTFail()
+            return
+        }
+
+        appServerClient.getFriendsResult = .success(payload: [])
         viewModel.deleteFriend(at: 0)
+
+        guard case .some(.empty) = viewModel.friendCells.value.first else {
+            XCTFail()
+            return
+        }
     }
 
     func testDeleteFriendFailure() {

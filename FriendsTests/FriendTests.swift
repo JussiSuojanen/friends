@@ -18,13 +18,4 @@ class FriendTests: XCTestCase {
 
         XCTAssertNotNil(Friend(json: testSuccessfulJSON))
     }
-
-    func testFailInit() {
-        let testFailJSON: JSON = ["id": 1,
-                                    "firstnamee": "Jimmy",
-                                    "lastnamee": "Swifty",
-                                    "phonenumbere": "0501234567"]
-
-        XCTAssertNil(Friend(json: testFailJSON))
-    }
 }

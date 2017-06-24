@@ -30,6 +30,7 @@
 		F4B59A6F1EAB47D40038F484 /* AddFriendViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43D01D21E1FBCF1004084C4 /* AddFriendViewModel.swift */; };
 		F4B59A711EAB4D230038F484 /* UpdateFriendViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B59A701EAB4D230038F484 /* UpdateFriendViewModelTests.swift */; };
 		F4B59A721EAB4E230038F484 /* UpdateFriendViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F442146F1E4B629D0006E18F /* UpdateFriendViewModel.swift */; };
+		F4BFE0561EFC377E004F76D5 /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4BFE0551EFC377E004F76D5 /* UIViewControllerExtension.swift */; };
 		F4C566621DD0E9F600E61578 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C566611DD0E9F600E61578 /* AppDelegate.swift */; };
 		F4C566641DD0E9F600E61578 /* FriendsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C566631DD0E9F600E61578 /* FriendsTableViewController.swift */; };
 		F4C566671DD0E9F600E61578 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F4C566651DD0E9F600E61578 /* Main.storyboard */; };
@@ -84,6 +85,7 @@
 		F4A6476A1DD6007E00F89F45 /* FriendsTableViewViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsTableViewViewModel.swift; sourceTree = "<group>"; };
 		F4B59A6D1EAB477B0038F484 /* AddFriendViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddFriendViewModelTests.swift; sourceTree = "<group>"; };
 		F4B59A701EAB4D230038F484 /* UpdateFriendViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateFriendViewModelTests.swift; sourceTree = "<group>"; };
+		F4BFE0551EFC377E004F76D5 /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
 		F4C5665E1DD0E9F600E61578 /* Friends.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Friends.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4C566611DD0E9F600E61578 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F4C566631DD0E9F600E61578 /* FriendsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsTableViewController.swift; sourceTree = "<group>"; };
@@ -223,6 +225,14 @@
 			name = ViewController;
 			sourceTree = "<group>";
 		};
+		F4BFE0541EFC3766004F76D5 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				F4BFE0551EFC377E004F76D5 /* UIViewControllerExtension.swift */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
 		F4C566551DD0E9F600E61578 = {
 			isa = PBXGroup;
 			children = (
@@ -248,6 +258,7 @@
 		F4C566601DD0E9F600E61578 /* Friends */ = {
 			isa = PBXGroup;
 			children = (
+				F4BFE0541EFC3766004F76D5 /* Extensions */,
 				F43D01D41E21382A004084C4 /* Helpers */,
 				F4A647601DD362CB00F89F45 /* Model */,
 				F4A6475F1DD362C100F89F45 /* Service */,
@@ -540,6 +551,7 @@
 			files = (
 				F43D01D61E21383E004084C4 /* Bindable.swift in Sources */,
 				F442146E1E4624340006E18F /* JSON.swift in Sources */,
+				F4BFE0561EFC377E004F76D5 /* UIViewControllerExtension.swift in Sources */,
 				F442146C1E4622990006E18F /* Result.swift in Sources */,
 				F43D01D11E1FBCDC004084C4 /* FriendViewController.swift in Sources */,
 				F4A647621DD362F100F89F45 /* Friend.swift in Sources */,

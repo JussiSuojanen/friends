@@ -80,13 +80,7 @@ final class FriendViewController: UIViewController {
         }
 
         viewModel?.onShowError = { [weak self] alert in
-            let alertController = UIAlertController(title: alert.title,
-                                                    message: alert.message,
-                                                    preferredStyle: .alert)
-            alertController.addAction(UIAlertAction(title: alert.action.buttonTitle,
-                                                    style: .default,
-                                                    handler: { _ in alert.action.handler?() }))
-            self?.present(alertController, animated: true, completion: nil)
+            self?.presentSingleButtonDialog(alert: alert)
         }
     }
 }

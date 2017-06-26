@@ -8,7 +8,11 @@
 
 import UIKit
 
-extension UIViewController {
+protocol SingleButtonDialogPresenter {
+    func presentSingleButtonDialog(alert: SingleButtonAlert)
+}
+
+extension SingleButtonDialogPresenter where Self: UIViewController {
     func presentSingleButtonDialog(alert: SingleButtonAlert) {
         let alertController = UIAlertController(title: alert.title,
                                                 message: alert.message,

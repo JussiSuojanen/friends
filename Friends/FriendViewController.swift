@@ -110,3 +110,6 @@ extension FriendViewController: UITextFieldDelegate {
         activeTextField = nil
     }
 }
+
+extension FriendViewController: SingleButtonDialogPresenter { }
+

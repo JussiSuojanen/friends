@@ -101,3 +101,5 @@ extension FriendsTableViewController {
         }
     }
 }
+
+extension FriendsTableViewController: SingleButtonDialogPresenter { }

@@ -46,7 +46,7 @@ class FriendsTableViewViewModel {
         case .normal(let vm):
             appServerClient.deleteFriend(id: vm.friendItem.id) { [weak self] result in
                 switch result {
-                case .success(_):
+                case .success:
                     self?.getFriends()
                 case .failure(let error):
                     let okAlert = SingleButtonAlert(

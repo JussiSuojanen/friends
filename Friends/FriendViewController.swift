@@ -47,14 +47,17 @@ final class FriendViewController: UIViewController {
         bindViewModel()
     }
 
+    @objc
     func firstnameTextFieldDidChange(textField: UITextField){
         viewModel?.firstname = textField.text ?? ""
     }
 
+    @objc
     func lastnameTextFieldDidChange(textField: UITextField){
         viewModel?.lastname = textField.text ?? ""
     }
 
+    @objc
     func phoneNumberTextFieldDidChange(textField: UITextField){
         viewModel?.phonenumber = textField.text ?? ""
     }

@@ -72,7 +72,7 @@ final class AddFriendViewModel: FriendViewModel {
             self?.showLoadingHud.value = false
             self?.updateSubmitButtonState?(true)
                 switch result {
-                case .success(_):
+                case .success:
                     self?.navigateBack?()
                 case .failure(let error):
                     let okAlert = SingleButtonAlert(

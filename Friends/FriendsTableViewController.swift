@@ -9,11 +9,11 @@
 import UIKit
 import PKHUD
 
-class FriendsTableViewController: UITableViewController {
+public class FriendsTableViewController: UITableViewController {
 
     let viewModel: FriendsTableViewViewModel = FriendsTableViewViewModel()
 
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
         bindViewModel()
         viewModel.getFriends()
@@ -28,6 +28,7 @@ class FriendsTableViewController: UITableViewController {
             self?.presentSingleButtonDialog(alert: alert)
         }
 
+
         viewModel.showLoadingHud.bind() { [weak self] visible in
             if let `self` = self {
                 PKHUD.sharedHUD.contentView = PKHUDSystemActivityIndicatorView()
@@ -36,7 +37,7 @@ class FriendsTableViewController: UITableViewController {
         }
     }
 
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    public override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "friendsToAddFriend",
             let destinationViewController = segue.destination as? FriendViewController {
             destinationViewController.viewModel = AddFriendViewModel()
@@ -66,11 +67,11 @@ class FriendsTableViewController: UITableViewController {
 // MARK: - UITableViewDelegate
 extension FriendsTableViewController {
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    public override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.friendCells.value.count
     }
 
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    public override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         switch viewModel.friendCells.value[indexPath.row] {
         case .normal(let viewModel):
@@ -93,11 +94,11 @@ extension FriendsTableViewController {
         }
     }
 
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+    public override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
 
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    public override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             viewModel.deleteFriend(at: indexPath.row)
         }

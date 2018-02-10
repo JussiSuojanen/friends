@@ -28,9 +28,11 @@ class FriendsTableViewController: UITableViewController {
             self?.presentSingleButtonDialog(alert: alert)
         }
 
-        viewModel.showLoadingHud.bind() { visible in
-            PKHUD.sharedHUD.contentView = PKHUDSystemActivityIndicatorView()
-            visible ? PKHUD.sharedHUD.show() : PKHUD.sharedHUD.hide()
+        viewModel.showLoadingHud.bind() { [weak self] visible in
+            if let `self` = self {
+                PKHUD.sharedHUD.contentView = PKHUDSystemActivityIndicatorView()
+                visible ? PKHUD.sharedHUD.show(onView: self.view) : PKHUD.sharedHUD.hide()
+            }
         }
     }
 

@@ -68,9 +68,11 @@ final class FriendViewController: UIViewController {
         textFieldLastname?.text = viewModel?.lastname ?? ""
         textFieldPhoneNumber?.text = viewModel?.phonenumber ?? ""
 
-        viewModel?.showLoadingHud.bind {
-            PKHUD.sharedHUD.contentView = PKHUDSystemActivityIndicatorView()
-            $0 ? PKHUD.sharedHUD.show() : PKHUD.sharedHUD.hide()
+        viewModel?.showLoadingHud.bind { [weak self] visible in
+            if let `self` = self {
+                PKHUD.sharedHUD.contentView = PKHUDSystemActivityIndicatorView()
+                visible ? PKHUD.sharedHUD.show(onView: self.view) : PKHUD.sharedHUD.hide()
+            }
         }
 
         viewModel?.updateSubmitButtonState = { [weak self] state in

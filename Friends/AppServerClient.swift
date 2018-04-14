@@ -26,11 +26,17 @@ class AppServerClient {
             .responseJSON { response in
                 switch response.result {
                 case .success:
-                    guard let jsonArray = response.result.value as? [JSON] else {
+                    do {
+                        guard let data = response.data else {
+                            completion(.failure(nil))
+                            return
+                        }
+
+                        let friends = try JSONDecoder().decode([Friend].self, from: data)
+                        completion(.success(payload: friends))
+                    } catch {
                         completion(.failure(nil))
-                        return
                     }
-                    completion(.success(payload: jsonArray.flatMap { Friend(json: $0 ) }))
                 case .failure(_):
                     if let statusCode = response.response?.statusCode,
                         let reason = GetFriendsFailureReason(rawValue: statusCode) {
@@ -88,12 +94,17 @@ class AppServerClient {
             .responseJSON { response in
                 switch response.result {
                 case .success:
-                    guard let friendJSON = response.result.value as? JSON,
-                     let friend = Friend(json: friendJSON) else {
+                    do {
+                        guard let data = response.data else {
+                            completion(.failure(nil))
+                            return
+                        }
+
+                        let friend = try JSONDecoder().decode(Friend.self, from: data)
+                        completion(.success(payload: friend))
+                    } catch {
                         completion(.failure(nil))
-                        return
                     }
-                    completion(.success(payload: friend))
                 case .failure(_):
                     if let statusCode = response.response?.statusCode,
                         let reason = PatchFriendFailureReason(rawValue: statusCode) {

@@ -34,7 +34,7 @@ class FriendsTableViewViewModel {
                     self?.friendCells.value = [.empty]
                     return
                 }
-                self?.friendCells.value = friends.flatMap { .normal(cellViewModel: $0 as FriendCellViewModel)}
+                self?.friendCells.value = friends.compactMap { .normal(cellViewModel: $0 as FriendCellViewModel)}
             case .failure(let error):
                 self?.friendCells.value = [.error(message: error?.getErrorMessage() ?? "Loading failed, check network connection")]
             }

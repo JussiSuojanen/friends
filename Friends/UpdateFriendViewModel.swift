@@ -81,7 +81,7 @@ final class UpdateFriendViewModel: FriendViewModel {
 
     func validateInput() {
         let validData = [firstname, lastname, phonenumber].filter {
-            ($0?.characters.count ?? 0) < 1
+            ($0?.count ?? 0) < 1
         }
         validInputData = (validData.count == 0) ? true : false
     }

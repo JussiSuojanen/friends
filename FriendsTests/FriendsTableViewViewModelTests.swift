@@ -78,7 +78,7 @@ class FriendsTableViewViewModelTests: XCTestCase {
         appServerClient.deleteFriendResult = .failure(AppServerClient.DeleteFriendFailureReason.notFound)
 
         let viewModel = FriendsTableViewViewModel(appServerClient: appServerClient)
-        viewModel.friendCells.value = [Friend.with()].flatMap { .normal(cellViewModel: $0 as FriendCellViewModel)}
+        viewModel.friendCells.value = [Friend.with()].compactMap { .normal(cellViewModel: $0 as FriendCellViewModel)}
 
         let expectErrorShown = expectation(description: "Error note is shown")
         viewModel.onShowError = { _ in

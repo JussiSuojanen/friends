@@ -406,7 +406,6 @@
 				F445F7AB201C965700D16385 /* Frameworks */,
 				F445F7AC201C965700D16385 /* Headers */,
 				F445F7AD201C965700D16385 /* Resources */,
-				6EE89621C670AB3646D4335E /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -426,7 +425,6 @@
 				F4C5665B1DD0E9F600E61578 /* Frameworks */,
 				F4C5665C1DD0E9F600E61578 /* Resources */,
 				0E78503827DAF989182F0F47 /* [CP] Embed Pods Frameworks */,
-				1FF45CEE0C0B55E0F4A25F2C /* [CP] Copy Pods Resources */,
 				F445F7C9201C965700D16385 /* Embed Frameworks */,
 			);
 			buildRules = (
@@ -448,7 +446,6 @@
 				F4C5666F1DD0E9F600E61578 /* Frameworks */,
 				F4C566701DD0E9F600E61578 /* Resources */,
 				0302818F017F13773DB9927D /* [CP] Embed Pods Frameworks */,
-				85A53C8F337B055D2274F005 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -578,12 +575,20 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-FriendsTests/Pods-FriendsTests-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/Differentiator/Differentiator.framework",
 				"${BUILT_PRODUCTS_DIR}/PKHUD/PKHUD.framework",
+				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
+				"${BUILT_PRODUCTS_DIR}/RxDataSources/RxDataSources.framework",
+				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Differentiator.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PKHUD.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxDataSources.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -598,61 +603,24 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Friends/Pods-Friends-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/Differentiator/Differentiator.framework",
 				"${BUILT_PRODUCTS_DIR}/PKHUD/PKHUD.framework",
+				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
+				"${BUILT_PRODUCTS_DIR}/RxDataSources/RxDataSources.framework",
+				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Differentiator.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PKHUD.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxDataSources.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Friends/Pods-Friends-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		1FF45CEE0C0B55E0F4A25F2C /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Friends/Pods-Friends-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		6EE89621C670AB3646D4335E /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TestFriendViewFramework/Pods-TestFriendViewFramework-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		85A53C8F337B055D2274F005 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FriendsTests/Pods-FriendsTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		A3A5F7458736874544D61F2D /* [CP] Check Pods Manifest.lock */ = {

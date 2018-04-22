@@ -6,6 +6,7 @@ target 'Friends' do
     pod 'PKHUD', '~> 5.0'
     pod 'RxSwift'
     pod 'RxDataSources'
+    pod 'RxSwiftExt'
 end
 
 target 'FriendsTests' do
@@ -13,6 +14,7 @@ target 'FriendsTests' do
     pod 'PKHUD', '~> 5.0'
     pod 'RxSwift'
     pod 'RxDataSources'
+    pod 'RxSwiftExt'
 end
 
 target 'TestFriendViewFramework' do
@@ -20,5 +22,6 @@ target 'TestFriendViewFramework' do
     pod 'PKHUD', '~> 5.0'
     pod 'RxSwift'
     pod 'RxDataSources'
+    pod 'RxSwiftExt'
 end
 

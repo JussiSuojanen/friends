@@ -6,19 +6,21 @@
 //  Copyright © 2016 Jimmy. All rights reserved.
 //
 
+import RxSwift
+
+enum FriendTableViewCellType {
+    case normal(cellViewModel: FriendCellViewModel)
+    case error(message: String)
+    case empty
+}
+
 class FriendsTableViewViewModel {
+    var onShowError = Variable<SingleButtonAlert?>(nil)
+    let showLoadingHud = Variable(false)
 
-    enum FriendTableViewCellType {
-        case normal(cellViewModel: FriendCellViewModel)
-        case error(message: String)
-        case empty
-    }
-
-    var onShowError: ((_ alert: SingleButtonAlert) -> Void)?
-    let showLoadingHud: Bindable = Bindable(false)
-
-    let friendCells = Bindable([FriendTableViewCellType]())
+    var friendCells: Variable<[FriendTableViewCellType]> = Variable([])
     let appServerClient: AppServerClient
+    let disposeBag = DisposeBag()
 
     init(appServerClient: AppServerClient = AppServerClient()) {
         self.appServerClient = appServerClient
@@ -26,41 +28,48 @@ class FriendsTableViewViewModel {
 
     func getFriends() {
         showLoadingHud.value = true
-        appServerClient.getFriends(completion: { [weak self] result in
-            self?.showLoadingHud.value = false
-            switch result {
-            case .success(let friends):
-                guard friends.count > 0 else {
-                    self?.friendCells.value = [.empty]
-                    return
+
+        appServerClient
+            .getFriends()
+            .subscribe(
+                onNext: { [weak self] friends in
+                    self?.showLoadingHud.value = false
+                    guard friends.count > 0 else {
+                        self?.friendCells.value = [.empty]
+                        return
+                    }
+
+                    self?.friendCells.value = friends.compactMap { .normal(cellViewModel: $0 as FriendCellViewModel) }
+                },
+                onError: { [weak self] error in
+                    self?.showLoadingHud.value = false
+                    self?.friendCells.value = [
+                        .error(
+                            message: (error as? AppServerClient.GetFriendsFailureReason)?.getErrorMessage() ?? "Loading failed, check network connection"
+                        )
+                    ]
                 }
-                self?.friendCells.value = friends.compactMap { .normal(cellViewModel: $0 as FriendCellViewModel)}
-            case .failure(let error):
-                self?.friendCells.value = [.error(message: error?.getErrorMessage() ?? "Loading failed, check network connection")]
-            }
-        })
+            )
+            .disposed(by: disposeBag)
     }
 
-    func deleteFriend(at index: Int) {
-        switch friendCells.value[index] {
-        case .normal(let vm):
-            appServerClient.deleteFriend(id: vm.friendItem.id) { [weak self] result in
-                switch result {
-                case .success:
+    func delete(friend: FriendCellViewModel) {
+        appServerClient
+            .deleteFriend(id: friend.friendItem.id)
+            .subscribe(
+                onNext: { [weak self] friends in
                     self?.getFriends()
-                case .failure(let error):
+                },
+                onError: { [weak self] error in
                     let okAlert = SingleButtonAlert(
-                        title: error?.getErrorMessage() ?? "Could not connect to server. Check your network and try again later.",
-                        message: "Could not remove \(vm.fullName).",
+                        title: (error as? AppServerClient.DeleteFriendFailureReason)?.getErrorMessage() ?? "Could not connect to server. Check your network and try again later.",
+                        message: "Could not remove \(friend.fullName).",
                         action: AlertAction(buttonTitle: "OK", handler: { print("Ok pressed!") })
                     )
-                    self?.onShowError?(okAlert)
+                    self?.onShowError.value = okAlert
                 }
-            }
-        default:
-            // nop
-            break
-        }
+            )
+            .disposed(by: disposeBag)
     }
 }
 

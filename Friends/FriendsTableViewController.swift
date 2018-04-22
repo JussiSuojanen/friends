@@ -8,38 +8,112 @@
 
 import UIKit
 import PKHUD
+import RxSwift
+import RxDataSources
 
-public class FriendsTableViewController: UITableViewController {
+public class FriendsTableViewController: UIViewController {
+    @IBOutlet var tableView: UITableView!
 
     let viewModel: FriendsTableViewViewModel = FriendsTableViewViewModel()
 
+    private let disposeBag = DisposeBag()
+
     public override func viewDidLoad() {
         super.viewDidLoad()
+
         bindViewModel()
+        setupCellDeleting()
+        setupCellTapHandling()
+
         viewModel.getFriends()
     }
 
     func bindViewModel() {
-        viewModel.friendCells.bindAndFire() { [weak self] _ in
-            self?.tableView?.reloadData()
-        }
-
-        viewModel.onShowError = { [weak self] alert in
-            self?.presentSingleButtonDialog(alert: alert)
-        }
-
-
-        viewModel.showLoadingHud.bind() { [weak self] visible in
-            if let `self` = self {
-                PKHUD.sharedHUD.contentView = PKHUDSystemActivityIndicatorView()
-                visible ? PKHUD.sharedHUD.show(onView: self.view) : PKHUD.sharedHUD.hide()
+        viewModel.friendCells.asObservable().bind(to: self.tableView.rx.items) { tableView, index, element in
+            let indexPath = IndexPath(item: index, section: 0)
+            switch element {
+            case .normal(let viewModel):
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: "friendCell", for: indexPath) as? FriendTableViewCell else {
+                    return UITableViewCell()
+                }
+                cell.viewModel = viewModel
+                return cell
+            case .error(let message):
+                let cell = UITableViewCell()
+                cell.isUserInteractionEnabled = false
+                cell.textLabel?.text = message
+                return cell
+            case .empty:
+                let cell = UITableViewCell()
+                cell.isUserInteractionEnabled = false
+                cell.textLabel?.text = "No data available"
+                return cell
             }
-        }
+        }.disposed(by: disposeBag)
+
+        viewModel.onShowError.asObservable().subscribe(
+            onNext: { [weak self] alert in
+                if let alert = alert {
+                    self?.presentSingleButtonDialog(alert: alert)
+                }
+            }
+        ).disposed(by: disposeBag)
+
+        viewModel.showLoadingHud.asObservable().subscribe(
+            onNext: { [weak self] visible in
+                self?.setLoadingHud(visible: visible)
+            },
+            onError: { [weak self] _ in
+                self?.setLoadingHud(visible: false)
+            },
+            onCompleted: { [weak self] in
+                self?.setLoadingHud(visible: false)
+            }
+        ).disposed(by: disposeBag)
+
+    }
+
+    private func setLoadingHud(visible: Bool) {
+        PKHUD.sharedHUD.contentView = PKHUDSystemActivityIndicatorView()
+        visible ? PKHUD.sharedHUD.show(onView: view) : PKHUD.sharedHUD.hide()
+    }
+
+    private func setupCellTapHandling() {
+        tableView
+            .rx
+            .modelSelected(FriendTableViewCellType.self)
+            .subscribe(
+                onNext: { [weak self] friendCellType in
+                    if let selectedRowIndexPath = self?.tableView.indexPathForSelectedRow {
+                        self?.tableView?.deselectRow(at: selectedRowIndexPath, animated: true)
+                    }
+                }
+            )
+            .disposed(by: disposeBag)
+    }
+
+    private func setupCellDeleting() {
+        tableView
+            .rx
+            .modelDeleted(FriendTableViewCellType.self)
+            .subscribe(
+                onNext: { [weak self] friendCellType in
+                    if case let .normal(viewModel) = friendCellType {
+                        self?.viewModel.delete(friend: viewModel)
+                    }
+
+                    if let selectedRowIndexPath = self?.tableView.indexPathForSelectedRow {
+                        self?.tableView?.deselectRow(at: selectedRowIndexPath, animated: true)
+                    }
+                }
+            )
+            .disposed(by: disposeBag)
     }
 
     public override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "friendsToAddFriend",
-            let destinationViewController = segue.destination as? FriendViewController {
+            let destinationViewController = segue.destination as? FriendViewController
+        {
             destinationViewController.viewModel = AddFriendViewModel()
             destinationViewController.updateFriends = { [weak self] in
                 self?.viewModel.getFriends()
@@ -48,8 +122,8 @@ public class FriendsTableViewController: UITableViewController {
 
         if segue.identifier == "friendToUpdateFriend",
             let destinationViewController = segue.destination as? FriendViewController,
-            let indexPath = tableView.indexPathForSelectedRow {
-
+            let indexPath = tableView.indexPathForSelectedRow
+        {
             switch viewModel.friendCells.value[indexPath.row] {
             case .normal(let viewModel):
                 destinationViewController.viewModel = UpdateFriendViewModel(friend:viewModel.friendItem)
@@ -64,45 +138,5 @@ public class FriendsTableViewController: UITableViewController {
     }
 }
 
-// MARK: - UITableViewDelegate
-extension FriendsTableViewController {
-
-    public override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.friendCells.value.count
-    }
-
-    public override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
-        switch viewModel.friendCells.value[indexPath.row] {
-        case .normal(let viewModel):
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "friendCell") as? FriendTableViewCell else {
-                return UITableViewCell()
-            }
-
-            cell.viewModel = viewModel
-            return cell
-        case .error(let message):
-            let cell = UITableViewCell()
-            cell.isUserInteractionEnabled = false
-            cell.textLabel?.text = message
-            return cell
-        case .empty:
-            let cell = UITableViewCell()
-            cell.isUserInteractionEnabled = false
-            cell.textLabel?.text = "No data available"
-            return cell
-        }
-    }
-
-    public override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-
-    public override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            viewModel.deleteFriend(at: indexPath.row)
-        }
-    }
-}
-
+// MARK: - SingleButtonDialogPresenter
 extension FriendsTableViewController: SingleButtonDialogPresenter { }

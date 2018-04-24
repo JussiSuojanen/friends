@@ -6,12 +6,12 @@
 //  Copyright © 2017 Jimmy. All rights reserved.
 //
 
-enum Result<T, U> where U: Error {
+enum Result<T, U: Error> {
     case success(payload: T)
     case failure(U?)
 }
 
-enum EmptyResult<U> where U: Error {
+enum EmptyResult<U: Error> {
     case success
     case failure(U?)
 }

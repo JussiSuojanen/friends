@@ -15,6 +15,7 @@ class AppServerClient {
     enum GetFriendsFailureReason: Int, Error {
         case unAuthorized = 401
         case notFound = 404
+        case unknown = 999
     }
 
     typealias GetFriendsResult = Result<[Friend], GetFriendsFailureReason>
@@ -27,7 +28,7 @@ class AppServerClient {
                 switch response.result {
                 case .success:
                     guard let jsonArray = response.result.value as? [JSON] else {
-                        completion(.failure(nil))
+                        completion(.failure(GetFriendsFailureReason.unknown))
                         return
                     }
                     completion(.success(payload: jsonArray.flatMap { Friend(json: $0 ) }))
@@ -36,7 +37,7 @@ class AppServerClient {
                         let reason = GetFriendsFailureReason(rawValue: statusCode) {
                         completion(.failure(reason))
                     }
-                    completion(.failure(nil))
+                    completion(.failure(GetFriendsFailureReason.unknown))
                 }
         }
     }
@@ -45,6 +46,7 @@ class AppServerClient {
     enum PostFriendFailureReason: Int, Error {
         case unAuthorized = 401
         case notFound = 404
+        case unknown = 999
     }
 
     typealias PostFriendResult = EmptyResult<PostFriendFailureReason>
@@ -65,7 +67,7 @@ class AppServerClient {
                         let reason = PostFriendFailureReason(rawValue: statusCode) {
                         completion(.failure(reason))
                     }
-                    completion(.failure(nil))
+                    completion(.failure(PostFriendFailureReason.unknown))
                 }
         }
     }
@@ -74,6 +76,7 @@ class AppServerClient {
     enum PatchFriendFailureReason: Int, Error {
         case unAuthorized = 401
         case notFound = 404
+        case unknown = 999
     }
 
     typealias PatchFriendResult = Result<Friend, PatchFriendFailureReason>
@@ -90,7 +93,7 @@ class AppServerClient {
                 case .success:
                     guard let friendJSON = response.result.value as? JSON,
                      let friend = Friend(json: friendJSON) else {
-                        completion(.failure(nil))
+                        completion(.failure(PatchFriendFailureReason.unknown))
                         return
                     }
                     completion(.success(payload: friend))
@@ -99,7 +102,7 @@ class AppServerClient {
                         let reason = PatchFriendFailureReason(rawValue: statusCode) {
                         completion(.failure(reason))
                     }
-                    completion(.failure(nil))
+                    completion(.failure(PatchFriendFailureReason.unknown))
                 }
         }
     }
@@ -108,6 +111,7 @@ class AppServerClient {
     enum DeleteFriendFailureReason: Int, Error {
         case unAuthorized = 401
         case notFound = 404
+        case unknown = 999
     }
 
     typealias DeleteFriendResult = EmptyResult<DeleteFriendFailureReason>
@@ -125,7 +129,7 @@ class AppServerClient {
                         let reason = DeleteFriendFailureReason(rawValue: statusCode) {
                         completion(.failure(reason))
                     }
-                    completion(.failure(nil))
+                    completion(.failure(DeleteFriendFailureReason.unknown))
                 }
         }
     }

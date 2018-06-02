@@ -13,12 +13,10 @@
 		F4027EF11EA4CC2A00191D52 /* FriendsTableViewViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4027EF01EA4CC2A00191D52 /* FriendsTableViewViewModelTests.swift */; };
 		F4027EF41EA4CE8D00191D52 /* MockFriend.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4027EF31EA4CE8D00191D52 /* MockFriend.swift */; };
 		F4027EF51EA4D03F00191D52 /* FriendsTableViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A6476A1DD6007E00F89F45 /* FriendsTableViewViewModel.swift */; };
-		F4027EF61EA4D15100191D52 /* Bindable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43D01D51E21383E004084C4 /* Bindable.swift */; };
 		F4027EF71EA4D15500191D52 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43D01D71E23E11C004084C4 /* Alert.swift */; };
 		F4027EF81EA4D15A00191D52 /* FriendCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A647661DD5F43600F89F45 /* FriendCellViewModel.swift */; };
 		F43D01D11E1FBCDC004084C4 /* FriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43D01D01E1FBCDC004084C4 /* FriendViewController.swift */; };
 		F43D01D31E1FBCF1004084C4 /* AddFriendViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43D01D21E1FBCF1004084C4 /* AddFriendViewModel.swift */; };
-		F43D01D61E21383E004084C4 /* Bindable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43D01D51E21383E004084C4 /* Bindable.swift */; };
 		F43D01D81E23E11C004084C4 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43D01D71E23E11C004084C4 /* Alert.swift */; };
 		F442146C1E4622990006E18F /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = F442146B1E4622990006E18F /* Result.swift */; };
 		F442146E1E4624340006E18F /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = F442146D1E4624340006E18F /* JSON.swift */; };
@@ -37,7 +35,6 @@
 		F445F7D7201C98FB00D16385 /* UpdateFriendViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F442146F1E4B629D0006E18F /* UpdateFriendViewModel.swift */; };
 		F445F7D8201C991900D16385 /* AppServerClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C5668F1DD0EB3C00E61578 /* AppServerClient.swift */; };
 		F445F7DB201CA9A400D16385 /* Friend.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A647611DD362F100F89F45 /* Friend.swift */; };
-		F445F7DC201CA9A900D16385 /* Bindable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43D01D51E21383E004084C4 /* Bindable.swift */; };
 		F445F7DD201CA9AE00D16385 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = F442146B1E4622990006E18F /* Result.swift */; };
 		F445F7DE201CA9B400D16385 /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = F442146D1E4624340006E18F /* JSON.swift */; };
 		F445F7DF201CA9CF00D16385 /* FriendCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A647661DD5F43600F89F45 /* FriendCellViewModel.swift */; };
@@ -63,7 +60,6 @@
 		F4E46A501EA4C12D00D9675A /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = F442146D1E4624340006E18F /* JSON.swift */; };
 		F4E46A511EA4C29100D9675A /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = F442146B1E4622990006E18F /* Result.swift */; };
 		F4F797C31EAD35FD00B6390D /* AlertTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F797C21EAD35FD00B6390D /* AlertTests.swift */; };
-		F4F797C51EAD36CC00B6390D /* BindableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F797C41EAD36CC00B6390D /* BindableTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -117,7 +113,6 @@
 		F4027EF31EA4CE8D00191D52 /* MockFriend.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockFriend.swift; sourceTree = "<group>"; };
 		F43D01D01E1FBCDC004084C4 /* FriendViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendViewController.swift; sourceTree = "<group>"; };
 		F43D01D21E1FBCF1004084C4 /* AddFriendViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddFriendViewModel.swift; sourceTree = "<group>"; };
-		F43D01D51E21383E004084C4 /* Bindable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bindable.swift; sourceTree = "<group>"; };
 		F43D01D71E23E11C004084C4 /* Alert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		F442146B1E4622990006E18F /* Result.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		F442146D1E4624340006E18F /* JSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSON.swift; sourceTree = "<group>"; };
@@ -148,7 +143,6 @@
 		F4C566831DD0E9F600E61578 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F4C5668F1DD0EB3C00E61578 /* AppServerClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppServerClient.swift; sourceTree = "<group>"; };
 		F4F797C21EAD35FD00B6390D /* AlertTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertTests.swift; sourceTree = "<group>"; };
-		F4F797C41EAD36CC00B6390D /* BindableTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BindableTests.swift; sourceTree = "<group>"; };
 		F6DE01E32E6513598B5206CA /* Pods-FriendsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FriendsTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FriendsTests/Pods-FriendsTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -233,7 +227,6 @@
 			isa = PBXGroup;
 			children = (
 				F43D01D71E23E11C004084C4 /* Alert.swift */,
-				F43D01D51E21383E004084C4 /* Bindable.swift */,
 				F442146B1E4622990006E18F /* Result.swift */,
 				F442146D1E4624340006E18F /* JSON.swift */,
 			);
@@ -370,7 +363,6 @@
 			isa = PBXGroup;
 			children = (
 				F4F797C21EAD35FD00B6390D /* AlertTests.swift */,
-				F4F797C41EAD36CC00B6390D /* BindableTests.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -693,7 +685,6 @@
 				F445F7D5201C98F000D16385 /* FriendViewController.swift in Sources */,
 				F445F7D4201C98EB00D16385 /* FriendsTableViewViewModel.swift in Sources */,
 				F445F7D0201C97BA00D16385 /* FriendsTableViewController.swift in Sources */,
-				F445F7DC201CA9A900D16385 /* Bindable.swift in Sources */,
 				F445F7DF201CA9CF00D16385 /* FriendCellViewModel.swift in Sources */,
 				F445F7D1201C98D400D16385 /* FriendTableViewCell.swift in Sources */,
 				F445F7DD201CA9AE00D16385 /* Result.swift in Sources */,
@@ -709,7 +700,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F43D01D61E21383E004084C4 /* Bindable.swift in Sources */,
 				F442146E1E4624340006E18F /* JSON.swift in Sources */,
 				F4BFE0561EFC377E004F76D5 /* UIViewControllerExtension.swift in Sources */,
 				F442146C1E4622990006E18F /* Result.swift in Sources */,
@@ -739,14 +729,12 @@
 				F4B59A721EAB4E230038F484 /* UpdateFriendViewModel.swift in Sources */,
 				F4F797C31EAD35FD00B6390D /* AlertTests.swift in Sources */,
 				F4027EF51EA4D03F00191D52 /* FriendsTableViewViewModel.swift in Sources */,
-				F4F797C51EAD36CC00B6390D /* BindableTests.swift in Sources */,
 				F4E46A4C1EA4C02000D9675A /* AppServerClient.swift in Sources */,
 				F4027EF41EA4CE8D00191D52 /* MockFriend.swift in Sources */,
 				F4E46A501EA4C12D00D9675A /* JSON.swift in Sources */,
 				F4B59A6E1EAB477B0038F484 /* AddFriendViewModelTests.swift in Sources */,
 				F4027EF81EA4D15A00191D52 /* FriendCellViewModel.swift in Sources */,
 				F4027EF71EA4D15500191D52 /* Alert.swift in Sources */,
-				F4027EF61EA4D15100191D52 /* Bindable.swift in Sources */,
 				F4B59A6F1EAB47D40038F484 /* AddFriendViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

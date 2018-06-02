@@ -191,9 +191,6 @@
                                 <state key="disabled">
                                     <color key="titleColor" red="0.25882352941176467" green="0.25882352941176467" blue="0.25882352941176467" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
-                                <connections>
-                                    <action selector="submitButtonTapped:" destination="WEH-2E-ThT" eventType="touchUpInside" id="nRq-3o-mjf"/>
-                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>

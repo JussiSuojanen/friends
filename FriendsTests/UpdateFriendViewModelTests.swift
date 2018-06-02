@@ -7,10 +7,12 @@
 //
 
 import XCTest
+import RxSwift
 
 class UpdateFriendViewModelTests: XCTestCase {
 
     func testPatchFriendSuccess() {
+        let disposeBag = DisposeBag()
         let appServerClient = MockAppServerClient()
         appServerClient.patchFriendResult = .success(payload: Friend.with())
 
@@ -18,16 +20,19 @@ class UpdateFriendViewModelTests: XCTestCase {
 
         let expectNavigateCall = expectation(description: "Navigate back is called")
 
-        viewModel.navigateBack = {
-            expectNavigateCall.fulfill()
-        }
+        viewModel.navigateBack.asObservable().debug().subscribe(
+            onNext: { _ in
+                expectNavigateCall.fulfill()
+            }
+        ).disposed(by: disposeBag)
 
-        viewModel.submitFriend()
+        viewModel.submitButtonTapped.onNext(())
 
         waitForExpectations(timeout: 0.1, handler: nil)
     }
 
     func testPatchFriendFailure() {
+        let disposeBag = DisposeBag()
         let appServerClient = MockAppServerClient()
         appServerClient.patchFriendResult = .failure(AppServerClient.PatchFriendFailureReason.notFound)
 
@@ -35,31 +40,37 @@ class UpdateFriendViewModelTests: XCTestCase {
 
         let expectErrorShown = expectation(description: "OnShowError is called")
 
-        viewModel.onShowError = { error in
-            expectErrorShown.fulfill()
-        }
+        viewModel.onShowError.asObservable().subscribe(
+            onNext: { singleButtonAlert in
+                if singleButtonAlert != nil {
+                    expectErrorShown.fulfill()
+                }
+            }
+        ).disposed(by: disposeBag)
 
-        viewModel.submitFriend()
-        
+        viewModel.submitButtonTapped.onNext(())
+
         waitForExpectations(timeout: 0.1, handler: nil)
     }
 
     func testValidateInputSuccess() {
+        let disposeBag = DisposeBag()
         let mockFriend = Friend.with()
         let appServerClient = MockAppServerClient()
 
         let viewModel = UpdateFriendViewModel(friend: mockFriend, appServerClient: appServerClient)
+        viewModel.firstname.value = mockFriend.firstname
+        viewModel.lastname.value = mockFriend.lastname
+        viewModel.phonenumber.value = mockFriend.phonenumber
 
         let expectUpdateSubmitButtonStateCall = expectation(description: "updateSubmitButtonState is called")
 
-        viewModel.updateSubmitButtonState = { state in
-            XCTAssert(state == true, "testValidateInputData failed. Data should be valid")
-            expectUpdateSubmitButtonStateCall.fulfill()
-        }
-
-        viewModel.firstname = mockFriend.firstname
-        viewModel.lastname = mockFriend.lastname
-        viewModel.phonenumber = mockFriend.phonenumber
+        viewModel.submitButtonEnabled.subscribe(
+            onNext: { state in
+                XCTAssert(state == true, "testValidateInputData failed. Data should be valid")
+                expectUpdateSubmitButtonStateCall.fulfill()
+            }
+        ).disposed(by: disposeBag)
 
         waitForExpectations(timeout: 0.1, handler: nil)
     }
@@ -67,9 +78,20 @@ class UpdateFriendViewModelTests: XCTestCase {
 }
 
 private final class MockAppServerClient: AppServerClient {
-    var patchFriendResult: AppServerClient.PatchFriendResult?
+    var patchFriendResult: Result<Friend, AppServerClient.PatchFriendFailureReason>?
 
-    override func patchFriend(firstname: String, lastname: String, phonenumber: String, id: Int, completion: @escaping PatchFriendCompletion) {
-        completion(patchFriendResult!)
+    override func patchFriend(firstname: String, lastname: String, phonenumber: String, id: Int) -> Observable<Friend> {
+        return Observable.create { observer in
+            switch self.patchFriendResult {
+            case .success(let friend)?:
+                observer.onNext(friend)
+            case .failure(let error)?:
+                observer.onError(error!)
+            case .none:
+                observer.onError(AppServerClient.GetFriendsFailureReason.notFound)
+            }
+
+            return Disposables.create()
+        }
     }
 }

@@ -11,7 +11,6 @@ import RxSwift
 
 // MARK: - AppServerClient
 class AppServerClient {
-
     // MARK: - GetFriends
     enum GetFriendsFailureReason: Int, Error {
         case unAuthorized = 401
@@ -27,7 +26,7 @@ class AppServerClient {
                     case .success:
                         do {
                             guard let data = response.data else {
-                                // want to avoid ! mark for unwrapping so incase there is no data and
+                                // want to avoid !-mark for unwrapping. Incase there is no data and
                                 // no error provided by alamofire return .notFound error instead.
                                 // .notFound should never happen here?
                                 observer.onError(response.error ?? GetFriendsFailureReason.notFound)
@@ -59,26 +58,29 @@ class AppServerClient {
         case notFound = 404
     }
 
-    typealias PostFriendResult = EmptyResult<PostFriendFailureReason>
-    typealias PostFriendCompletion = (_ result: PostFriendResult) -> Void
-
-    func postFriend(firstname: String, lastname: String, phonenumber: String, completion: @escaping PostFriendCompletion) {
+    func postFriend(firstname: String, lastname: String, phonenumber: String) -> Observable<Void> {
         let param = ["firstname": firstname,
                      "lastname": lastname,
                      "phonenumber": phonenumber]
-        Alamofire.request("https://friendservice.herokuapp.com/addFriend", method: .post, parameters: param, encoding: JSONEncoding.default)
-            .validate()
-            .responseJSON { response in
-                switch response.result {
-                case .success:
-                    completion(.success)
-                case .failure(_):
-                    if let statusCode = response.response?.statusCode,
-                        let reason = PostFriendFailureReason(rawValue: statusCode) {
-                        completion(.failure(reason))
+
+        return Observable<Void>.create { [param] observer -> Disposable in
+            Alamofire.request("https://friendservice.herokuapp.com/addFriend", method: .post, parameters: param, encoding: JSONEncoding.default)
+                .validate()
+                .responseJSON { [observer] response in
+                    switch response.result {
+                    case .success:
+                        observer.onNext(())
+                    case .failure(let error):
+                        if let statusCode = response.response?.statusCode,
+                            let reason = PostFriendFailureReason(rawValue: statusCode)
+                        {
+                            observer.onError(reason)
+                        }
+                        observer.onError(error)
                     }
-                    completion(.failure(nil))
-                }
+            }
+
+            return Disposables.create()
         }
     }
 
@@ -88,36 +90,43 @@ class AppServerClient {
         case notFound = 404
     }
 
-    typealias PatchFriendResult = Result<Friend, PatchFriendFailureReason>
-    typealias PatchFriendCompletion = (_ result: PatchFriendResult) -> Void
-
-    func patchFriend(firstname: String, lastname: String, phonenumber: String, id: Int, completion: @escaping PatchFriendCompletion) {
+    func patchFriend(firstname: String, lastname: String, phonenumber: String, id: Int) -> Observable<Friend> {
         let param = ["firstname": firstname,
                      "lastname": lastname,
                      "phonenumber": phonenumber]
-        Alamofire.request("https://friendservice.herokuapp.com/editFriend/\(id)", method: .patch, parameters: param, encoding: JSONEncoding.default)
-            .validate()
-            .responseJSON { response in
-                switch response.result {
-                case .success:
-                    do {
-                        guard let data = response.data else {
-                            completion(.failure(nil))
-                            return
+        return Observable.create { observer in
+            Alamofire.request("https://friendservice.herokuapp.com/editFriend/\(id)", method: .patch, parameters: param, encoding: JSONEncoding.default)
+                .validate()
+                .responseJSON { response in
+                    switch response.result {
+                    case .success:
+                        do {
+                            guard let data = response.data else {
+                                // want to avoid !-mark for unwrapping. Incase there is no data and
+                                // no error provided by alamofire return .notFound error instead.
+                                // .notFound should never happen here?
+                                observer.onError(response.error ?? GetFriendsFailureReason.notFound)
+
+                                return
+                            }
+
+                            let friend = try JSONDecoder().decode(Friend.self, from: data)
+                            observer.onNext(friend)
+                        } catch {
+                            observer.onError(error)
+                        }
+                    case .failure(let error):
+                        if let statusCode = response.response?.statusCode,
+                            let reason = PatchFriendFailureReason(rawValue: statusCode)
+                        {
+                            observer.onError(reason)
                         }
 
-                        let friend = try JSONDecoder().decode(Friend.self, from: data)
-                        completion(.success(payload: friend))
-                    } catch {
-                        completion(.failure(nil))
+                        observer.onError(error)
                     }
-                case .failure(_):
-                    if let statusCode = response.response?.statusCode,
-                        let reason = PatchFriendFailureReason(rawValue: statusCode) {
-                        completion(.failure(reason))
-                    }
-                    completion(.failure(nil))
-                }
+            }
+
+            return Disposables.create()
         }
     }
 

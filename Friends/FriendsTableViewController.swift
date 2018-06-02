@@ -115,9 +115,11 @@ public class FriendsTableViewController: UIViewController {
             let destinationViewController = segue.destination as? FriendViewController
         {
             destinationViewController.viewModel = AddFriendViewModel()
-            destinationViewController.updateFriends = { [weak self] in
+            destinationViewController.updateFriends.asObserver().subscribe(onNext: { [weak self] () in
                 self?.viewModel.getFriends()
-            }
+                }, onCompleted: {
+                    print("ONCOMPLETED")
+            }).disposed(by: destinationViewController.disposeBag)
         }
 
         if segue.identifier == "friendToUpdateFriend",
@@ -127,9 +129,11 @@ public class FriendsTableViewController: UIViewController {
             switch viewModel.friendCells.value[indexPath.row] {
             case .normal(let viewModel):
                 destinationViewController.viewModel = UpdateFriendViewModel(friend:viewModel.friendItem)
-                destinationViewController.updateFriends = { [weak self] in
+                destinationViewController.updateFriends.asObserver().subscribe(onNext: { [weak self] () in
                     self?.viewModel.getFriends()
-                }
+                    }, onCompleted: {
+                        print("ONCOMPLETED")
+                }).disposed(by: destinationViewController.disposeBag)
             case .empty, .error:
                 // nop
                 break

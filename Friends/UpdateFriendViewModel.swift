@@ -5,85 +5,77 @@
 //  Created by Jussi Suojanen on 08/02/17.
 //  Copyright © 2017 Jimmy. All rights reserved.
 //
+import RxSwift
 
 final class UpdateFriendViewModel: FriendViewModel {
-    var friend: Friend
-    var title: String {
-        return "Update Friend"
-    }
-    var firstname: String? {
-        didSet {
-            validateInput()
-        }
-    }
-    var lastname: String? {
-        didSet {
-            validateInput()
-        }
-    }
-    var phonenumber: String? {
-        didSet {
-            validateInput()
-        }
+    var title = Variable<String>("Update Friend")
+    var firstname = Variable<String>("")
+    var lastname = Variable<String>("")
+    var phonenumber = Variable<String>("")
+    var submitButtonEnabled = Observable.just(false)
+    var navigateBack = PublishSubject<Void>()
+    var onShowError = Variable<SingleButtonAlert?>(nil)
+
+    private let friend: Friend
+
+    private var firstnameValid: Observable<Bool> {
+        return firstname.asObservable().map { $0.count > 0 }
     }
 
-    var validInputData: Bool = false {
-        didSet {
-            if oldValue != validInputData {
-                updateSubmitButtonState?(validInputData)
-            }
-        }
+    private var lastnameValid: Observable<Bool> {
+        return lastname.asObservable().map { $0.count > 0 }
     }
 
-    var updateSubmitButtonState: ((Bool) -> ())?
-    var navigateBack: (() -> ())?
-    var onShowError: ((_ alert: SingleButtonAlert) -> Void)?
+    private var phoneNumberValid: Observable<Bool> {
+        return phonenumber.asObservable().map { $0.count > 0 }
+    }
 
-    let showLoadingHud = Bindable(false)
-    let appServerClient: AppServerClient
+    let submitButtonTapped = PublishSubject<Void>()
+    let showLoadingHud = Variable(false)
+    let disposeBag = DisposeBag()
+
+    private let appServerClient: AppServerClient
 
     init(friend: Friend, appServerClient: AppServerClient = AppServerClient()) {
         self.friend = friend
-        self.firstname = friend.firstname
-        self.lastname = friend.lastname
-        self.phonenumber = friend.phonenumber
+        self.firstname.value = friend.firstname
+        self.lastname.value = friend.lastname
+        self.phonenumber.value = friend.phonenumber
         self.appServerClient = appServerClient
+        self.submitButtonEnabled = Observable.combineLatest(firstnameValid, lastnameValid, phoneNumberValid) { $0 && $1 && $2 }
+
+        self.submitButtonTapped.asObserver()
+            .subscribe(onNext: { [weak self] in
+                self?.submitFriend()
+                }
+        ).disposed(by: disposeBag)
     }
 
-    func submitFriend() {
-        guard let firstname = firstname,
-            let lastname = lastname,
-            let phonenumber = phonenumber else {
-                return
-        }
-
-        updateSubmitButtonState?(false)
+    private func submitFriend() {
         showLoadingHud.value = true
 
-        appServerClient.patchFriend(firstname: firstname, lastname: lastname, phonenumber: phonenumber, id: friend.id) { [weak self] result in
+        appServerClient.patchFriend(
+            firstname: firstname.value,
+            lastname: lastname.value,
+            phonenumber: phonenumber.value,
+            id: friend.id)
+            .subscribe(
+                onNext: { [weak self] friend in
+                    self?.showLoadingHud.value = false
+                    self?.navigateBack.onNext(())
+                },
+                onError: { [weak self] error in
+                    self?.showLoadingHud.value = false
+                    let okAlert = SingleButtonAlert(
+                        title: (error as? AppServerClient.PatchFriendFailureReason)?.getErrorMessage() ?? "Could not connect to server. Check your network and try again later.",
+                        message: "Failed to update information.",
+                        action: AlertAction(buttonTitle: "OK", handler: { print("Ok pressed!") })
+                    )
 
-            self?.updateSubmitButtonState?(true)
-            self?.showLoadingHud.value = false
-
-            switch result {
-            case .success(_):
-                self?.navigateBack?()
-            case .failure(let error):
-                let okAlert = SingleButtonAlert(
-                    title: error?.getErrorMessage() ?? "Could not connect to server. Check your network and try again later.",
-                    message: "Failed to update information.",
-                    action: AlertAction(buttonTitle: "OK", handler: { print("Ok pressed!") })
-                )
-                self?.onShowError?(okAlert)
-            }
-        }
-    }
-
-    func validateInput() {
-        let validData = [firstname, lastname, phonenumber].filter {
-            ($0?.count ?? 0) < 1
-        }
-        validInputData = (validData.count == 0) ? true : false
+                    self?.onShowError.value = okAlert
+                }
+            )
+            .disposed(by: disposeBag)
     }
 }
 

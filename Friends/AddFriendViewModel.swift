@@ -6,90 +6,84 @@
 //  Copyright © 2017 Jimmy. All rights reserved.
 //
 
+import RxSwift
+
 protocol FriendViewModel {
-    var title: String { get }
-    var firstname: String? { get set }
-    var lastname: String? { get set }
-    var phonenumber: String? { get set }
-    var showLoadingHud: Bindable<Bool> { get }
-
-    var updateSubmitButtonState: ((Bool) -> ())? { get set }
-    var navigateBack: (() -> ())?  { get set }
-    var onShowError: ((_ alert: SingleButtonAlert) -> Void)?  { get set }
-
-    func submitFriend()
+    var title: Variable<String> { get }
+    var firstname: Variable<String> { get set }
+    var lastname: Variable<String> { get set }
+    var phonenumber: Variable<String> { get }
+    var submitButtonTapped: PublishSubject<Void> { get }
+    var showLoadingHud: Variable<Bool> { get }
+    var submitButtonEnabled: Observable<Bool> { get }
+    var navigateBack: PublishSubject<Void>  { get }
+    var onShowError: Variable<SingleButtonAlert?>  { get set }
 }
 
 final class AddFriendViewModel: FriendViewModel {
-    var title: String {
-        return "Add Friend"
-    }
-    var firstname: String? {
-        didSet {
-            validateInput()
-        }
-    }
-    var lastname: String? {
-        didSet {
-            validateInput()
-        }
-    }
-    var phonenumber: String? {
-        didSet {
-            validateInput()
-        }
-    }
-    var updateSubmitButtonState: ((Bool) -> ())?
-    var navigateBack: (() -> ())?
-    var onShowError: ((_ alert: SingleButtonAlert) -> Void)?
+    var title = Variable<String>("Add Friend")
+    var firstname = Variable<String>("")
+    var lastname = Variable<String>("")
+    var phonenumber = Variable<String>("")
+    var submitButtonEnabled = Observable.just(false)
+    var navigateBack = PublishSubject<Void>()
+    var onShowError = Variable<SingleButtonAlert?>(nil)
 
-    let showLoadingHud: Bindable = Bindable(false)
+    let submitButtonTapped = PublishSubject<Void>()
+    let showLoadingHud = Variable(false)
+
+    private var firstnameValid: Observable<Bool> {
+        return firstname.asObservable().map { $0.count > 0 }
+    }
+
+    private var lastnameValid: Observable<Bool> {
+        return lastname.asObservable().map { $0.count > 0 }
+    }
+
+    private var phoneNumberValid: Observable<Bool> {
+        return phonenumber.asObservable().map { $0.count > 0 }
+    }
 
     private let appServerClient: AppServerClient
-    private var validInputData: Bool = false {
-        didSet {
-            if oldValue != validInputData {
-                updateSubmitButtonState?(validInputData)
-            }
-        }
-    }
+    private let disposeBag = DisposeBag()
 
     init(appServerClient: AppServerClient = AppServerClient()) {
         self.appServerClient = appServerClient
+        self.submitButtonEnabled = Observable.combineLatest(firstnameValid, lastnameValid, phoneNumberValid) { $0 && $1 && $2 }
+
+        submitButtonTapped
+            .subscribe(
+                onNext: { [weak self] in
+                    self?.postFriend()
+                }
+            )
+            .disposed(by: disposeBag)
     }
 
-    func submitFriend() {
-        guard let firstname = firstname,
-            let lastname = lastname,
-            let phonenumber = phonenumber else {
-                return
-        }
+    private func postFriend() {
+        appServerClient.postFriend(
+            firstname: firstname.value,
+            lastname: lastname.value,
+            phonenumber: phonenumber.value)
+            .subscribe(
+                onNext: { [weak self] _ in
+                    self?.navigateBack.onNext(())
+                },
+                onError: { [weak self] error in
+                    guard let `self` = self else {
+                        return
+                    }
 
-        updateSubmitButtonState?(false)
-        showLoadingHud.value = true
-
-        appServerClient.postFriend(firstname: firstname, lastname: lastname, phonenumber: phonenumber) { [weak self] result in
-            self?.showLoadingHud.value = false
-            self?.updateSubmitButtonState?(true)
-                switch result {
-                case .success:
-                    self?.navigateBack?()
-                case .failure(let error):
                     let okAlert = SingleButtonAlert(
-                        title: error?.getErrorMessage() ?? "Could not connect to server. Check your network and try again later.",
-                        message: "Could not add \(firstname) \(lastname).",
+                        title: (error as? AppServerClient.PostFriendFailureReason)?.getErrorMessage() ?? "Could not connect to server. Check your network and try again later.",
+                        message: "Could not add \(self.firstname.value) \(self.lastname.value).",
                         action: AlertAction(buttonTitle: "OK", handler: { print("Ok pressed!") })
                     )
-                    self?.onShowError?(okAlert)
-                }
-        }
-    }
 
-    func validateInput() {
-        let validData = [firstname, lastname, phonenumber].filter {
-            ($0?.count ?? 0) < 1
-        }
-        validInputData = (validData.count == 0) ? true : false
+                    self.onShowError.value = okAlert
+                }
+            )
+            .disposed(by: disposeBag)
     }
 }
 

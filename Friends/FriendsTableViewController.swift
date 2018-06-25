@@ -63,9 +63,6 @@ public class FriendsTableViewController: UIViewController {
             onNext: { [weak self] visible in
                 self?.setLoadingHud(visible: visible)
             },
-            onError: { [weak self] _ in
-                self?.setLoadingHud(visible: false)
-            },
             onCompleted: { [weak self] in
                 self?.setLoadingHud(visible: false)
             }

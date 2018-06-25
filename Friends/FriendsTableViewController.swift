@@ -59,7 +59,7 @@ public class FriendsTableViewController: UIViewController {
             }
         ).disposed(by: disposeBag)
 
-        viewModel.showLoadingHud.asObservable().subscribe(
+        viewModel.onShowLoadingHud.asObservable().subscribe(
             onNext: { [weak self] visible in
                 self?.setLoadingHud(visible: visible)
             },

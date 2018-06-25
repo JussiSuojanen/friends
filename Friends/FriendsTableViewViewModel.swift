@@ -16,7 +16,7 @@ enum FriendTableViewCellType {
 
 class FriendsTableViewViewModel {
     var onShowError = Variable<SingleButtonAlert?>(nil)
-    let showLoadingHud = Variable(false)
+    let onShowLoadingHud = Variable(false)
 
     var friendCells: Variable<[FriendTableViewCellType]> = Variable([])
     let appServerClient: AppServerClient
@@ -27,13 +27,13 @@ class FriendsTableViewViewModel {
     }
 
     func getFriends() {
-        showLoadingHud.value = true
+        onShowLoadingHud.value = true
 
         appServerClient
             .getFriends()
             .subscribe(
                 onNext: { [weak self] friends in
-                    self?.showLoadingHud.value = false
+                    self?.onShowLoadingHud.value = false
                     guard friends.count > 0 else {
                         self?.friendCells.value = [.empty]
                         return
@@ -42,7 +42,7 @@ class FriendsTableViewViewModel {
                     self?.friendCells.value = friends.compactMap { .normal(cellViewModel: $0 as FriendCellViewModel) }
                 },
                 onError: { [weak self] error in
-                    self?.showLoadingHud.value = false
+                    self?.onShowLoadingHud.value = false
                     self?.friendCells.value = [
                         .error(
                             message: (error as? AppServerClient.GetFriendsFailureReason)?.getErrorMessage() ?? "Loading failed, check network connection"

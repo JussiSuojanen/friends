@@ -14,19 +14,20 @@ final class UpdateFriendViewModel: FriendViewModel {
     var firstname = Variable<String>("")
     var lastname = Variable<String>("")
     var phonenumber = Variable<String>("")
-    var submitButtonEnabled = Observable.just(false)
     var navigateBack = PublishSubject<Void>()
+
+    var submitButtonEnabled: Observable<Bool> {
+        return Observable.combineLatest(firstnameValid, lastnameValid, phoneNumberValid) { $0 && $1 && $2 }
+    }
 
     private let friend: Friend
 
     private var firstnameValid: Observable<Bool> {
         return firstname.asObservable().map { $0.count > 0 }
     }
-
     private var lastnameValid: Observable<Bool> {
         return lastname.asObservable().map { $0.count > 0 }
     }
-
     private var phoneNumberValid: Observable<Bool> {
         return phonenumber.asObservable().map { $0.count > 0 }
     }
@@ -43,7 +44,6 @@ final class UpdateFriendViewModel: FriendViewModel {
         self.lastname.value = friend.lastname
         self.phonenumber.value = friend.phonenumber
         self.appServerClient = appServerClient
-        self.submitButtonEnabled = Observable.combineLatest(firstnameValid, lastnameValid, phoneNumberValid) { $0 && $1 && $2 }
 
         self.submitButtonTapped.asObserver()
             .subscribe(onNext: { [weak self] in

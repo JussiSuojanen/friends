@@ -25,12 +25,15 @@ final class AddFriendViewModel: FriendViewModel {
     var firstname = Variable<String>("")
     var lastname = Variable<String>("")
     var phonenumber = Variable<String>("")
-    var submitButtonEnabled = Observable.just(false)
     var navigateBack = PublishSubject<Void>()
     let onShowError = PublishSubject<SingleButtonAlert>()
 
     let submitButtonTapped = PublishSubject<Void>()
     let showLoadingHud = Variable(false)
+
+    var submitButtonEnabled: Observable<Bool> {
+        return Observable.combineLatest(firstnameValid, lastnameValid, phoneNumberValid) { $0 && $1 && $2 }
+    }
 
     private var firstnameValid: Observable<Bool> {
         return firstname.asObservable().map { $0.count > 0 }
@@ -49,7 +52,6 @@ final class AddFriendViewModel: FriendViewModel {
 
     init(appServerClient: AppServerClient = AppServerClient()) {
         self.appServerClient = appServerClient
-        self.submitButtonEnabled = Observable.combineLatest(firstnameValid, lastnameValid, phoneNumberValid) { $0 && $1 && $2 }
 
         submitButtonTapped
             .subscribe(

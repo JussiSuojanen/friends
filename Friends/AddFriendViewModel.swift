@@ -17,7 +17,7 @@ protocol FriendViewModel {
     var showLoadingHud: Variable<Bool> { get }
     var submitButtonEnabled: Observable<Bool> { get }
     var navigateBack: PublishSubject<Void>  { get }
-    var onShowError: Variable<SingleButtonAlert?>  { get set }
+    var onShowError: PublishSubject<SingleButtonAlert>  { get }
 }
 
 final class AddFriendViewModel: FriendViewModel {
@@ -27,7 +27,7 @@ final class AddFriendViewModel: FriendViewModel {
     var phonenumber = Variable<String>("")
     var submitButtonEnabled = Observable.just(false)
     var navigateBack = PublishSubject<Void>()
-    var onShowError = Variable<SingleButtonAlert?>(nil)
+    let onShowError = PublishSubject<SingleButtonAlert>()
 
     let submitButtonTapped = PublishSubject<Void>()
     let showLoadingHud = Variable(false)
@@ -80,7 +80,7 @@ final class AddFriendViewModel: FriendViewModel {
                         action: AlertAction(buttonTitle: "OK", handler: { print("Ok pressed!") })
                     )
 
-                    self.onShowError.value = okAlert
+                    self.onShowError.onNext(okAlert)
                 }
             )
             .disposed(by: disposeBag)

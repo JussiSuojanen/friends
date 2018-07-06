@@ -51,11 +51,9 @@ public class FriendsTableViewController: UIViewController {
             }
         }.disposed(by: disposeBag)
 
-        viewModel.onShowError.asObservable().subscribe(
+        viewModel.onShowError.subscribe(
             onNext: { [weak self] alert in
-                if let alert = alert {
-                    self?.presentSingleButtonDialog(alert: alert)
-                }
+                self?.presentSingleButtonDialog(alert: alert)
             }
         ).disposed(by: disposeBag)
 

@@ -8,13 +8,14 @@
 import RxSwift
 
 final class UpdateFriendViewModel: FriendViewModel {
+    let onShowError = PublishSubject<SingleButtonAlert>()
+
     var title = Variable<String>("Update Friend")
     var firstname = Variable<String>("")
     var lastname = Variable<String>("")
     var phonenumber = Variable<String>("")
     var submitButtonEnabled = Observable.just(false)
     var navigateBack = PublishSubject<Void>()
-    var onShowError = Variable<SingleButtonAlert?>(nil)
 
     private let friend: Friend
 
@@ -72,7 +73,7 @@ final class UpdateFriendViewModel: FriendViewModel {
                         action: AlertAction(buttonTitle: "OK", handler: { print("Ok pressed!") })
                     )
 
-                    self?.onShowError.value = okAlert
+                    self?.onShowError.onNext(okAlert)
                 }
             )
             .disposed(by: disposeBag)

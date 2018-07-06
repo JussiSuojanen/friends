@@ -52,9 +52,7 @@ class AddFriendViewModelTests: XCTestCase {
 
         viewModel.onShowError.asObservable().subscribe(
             onNext: { singleButtonAlert in
-                if singleButtonAlert != nil {
-                    expectErrorShown.fulfill()
-                }
+                expectErrorShown.fulfill()
             }
         ).disposed(by: disposeBag)
 

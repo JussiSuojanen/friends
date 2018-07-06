@@ -15,7 +15,7 @@ enum FriendTableViewCellType {
 }
 
 class FriendsTableViewViewModel {
-    var onShowError = Variable<SingleButtonAlert?>(nil)
+    let onShowError = PublishSubject<SingleButtonAlert>()
     let onShowLoadingHud = Variable(false)
 
     var friendCells: Variable<[FriendTableViewCellType]> = Variable([])
@@ -66,7 +66,7 @@ class FriendsTableViewViewModel {
                         message: "Could not remove \(friend.fullName).",
                         action: AlertAction(buttonTitle: "OK", handler: { print("Ok pressed!") })
                     )
-                    self?.onShowError.value = okAlert
+                    self?.onShowError.onNext(okAlert)
                 }
             )
             .disposed(by: disposeBag)

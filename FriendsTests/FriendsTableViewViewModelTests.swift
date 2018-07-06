@@ -83,11 +83,9 @@ class FriendsTableViewViewModelTests: XCTestCase {
         viewModel.friendCells.value = [Friend.with()].compactMap { .normal(cellViewModel: $0 as FriendCellViewModel)}
 
         let expectErrorShown = expectation(description: "Error note is shown")
-        viewModel.onShowError.asObservable().debug().subscribe(
+        viewModel.onShowError.subscribe(
             onNext: { singleButtonAlert in
-                if singleButtonAlert != nil {
-                    expectErrorShown.fulfill()
-                }
+                expectErrorShown.fulfill()
             }).disposed(by: disposeBag)
 
         viewModel.delete(friend: Friend.with())

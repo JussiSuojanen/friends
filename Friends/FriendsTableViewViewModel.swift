@@ -15,13 +15,12 @@ enum FriendTableViewCellType {
 }
 
 class FriendsTableViewViewModel {
-    var friendCells = Variable<[FriendTableViewCellType]>([])
-
     let onShowError = PublishSubject<SingleButtonAlert>()
     let onShowLoadingHud = Variable(false)
-
     let appServerClient: AppServerClient
     let disposeBag = DisposeBag()
+
+    var friendCells = Variable<[FriendTableViewCellType]>([])
 
     init(appServerClient: AppServerClient = AppServerClient()) {
         self.appServerClient = appServerClient

@@ -16,39 +16,37 @@ protocol FriendViewModel {
     var submitButtonTapped: PublishSubject<Void> { get }
     var showLoadingHud: Variable<Bool> { get }
     var submitButtonEnabled: Observable<Bool> { get }
-    var navigateBack: PublishSubject<Void>  { get }
+    var onNavigateBack: PublishSubject<Void>  { get }
     var onShowError: PublishSubject<SingleButtonAlert>  { get }
 }
 
 final class AddFriendViewModel: FriendViewModel {
+    let onNavigateBack = PublishSubject<Void>()
+    let onShowError = PublishSubject<SingleButtonAlert>()
+    let submitButtonTapped = PublishSubject<Void>()
+    let showLoadingHud = Variable(false)
+
     var title = Variable<String>("Add Friend")
     var firstname = Variable<String>("")
     var lastname = Variable<String>("")
     var phonenumber = Variable<String>("")
-    var navigateBack = PublishSubject<Void>()
-    let onShowError = PublishSubject<SingleButtonAlert>()
-
-    let submitButtonTapped = PublishSubject<Void>()
-    let showLoadingHud = Variable(false)
 
     var submitButtonEnabled: Observable<Bool> {
         return Observable.combineLatest(firstnameValid, lastnameValid, phoneNumberValid) { $0 && $1 && $2 }
     }
 
+    private let appServerClient: AppServerClient
+    private let disposeBag = DisposeBag()
+
     private var firstnameValid: Observable<Bool> {
         return firstname.asObservable().map { $0.count > 0 }
     }
-
     private var lastnameValid: Observable<Bool> {
         return lastname.asObservable().map { $0.count > 0 }
     }
-
     private var phoneNumberValid: Observable<Bool> {
         return phonenumber.asObservable().map { $0.count > 0 }
     }
-
-    private let appServerClient: AppServerClient
-    private let disposeBag = DisposeBag()
 
     init(appServerClient: AppServerClient = AppServerClient()) {
         self.appServerClient = appServerClient
@@ -69,7 +67,7 @@ final class AddFriendViewModel: FriendViewModel {
             phonenumber: phonenumber.value)
             .subscribe(
                 onNext: { [weak self] _ in
-                    self?.navigateBack.onNext(())
+                    self?.onNavigateBack.onNext(())
                 },
                 onError: { [weak self] error in
                     guard let `self` = self else {

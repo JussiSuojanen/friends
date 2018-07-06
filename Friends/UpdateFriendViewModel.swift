@@ -9,18 +9,22 @@ import RxSwift
 
 final class UpdateFriendViewModel: FriendViewModel {
     let onShowError = PublishSubject<SingleButtonAlert>()
+    let onNavigateBack = PublishSubject<Void>()
+    let submitButtonTapped = PublishSubject<Void>()
+    let showLoadingHud = Variable(false)
+    let disposeBag = DisposeBag()
 
     var title = Variable<String>("Update Friend")
     var firstname = Variable<String>("")
     var lastname = Variable<String>("")
     var phonenumber = Variable<String>("")
-    var navigateBack = PublishSubject<Void>()
 
     var submitButtonEnabled: Observable<Bool> {
         return Observable.combineLatest(firstnameValid, lastnameValid, phoneNumberValid) { $0 && $1 && $2 }
     }
 
     private let friend: Friend
+    private let appServerClient: AppServerClient
 
     private var firstnameValid: Observable<Bool> {
         return firstname.asObservable().map { $0.count > 0 }
@@ -31,12 +35,6 @@ final class UpdateFriendViewModel: FriendViewModel {
     private var phoneNumberValid: Observable<Bool> {
         return phonenumber.asObservable().map { $0.count > 0 }
     }
-
-    let submitButtonTapped = PublishSubject<Void>()
-    let showLoadingHud = Variable(false)
-    let disposeBag = DisposeBag()
-
-    private let appServerClient: AppServerClient
 
     init(friend: Friend, appServerClient: AppServerClient = AppServerClient()) {
         self.friend = friend
@@ -63,7 +61,7 @@ final class UpdateFriendViewModel: FriendViewModel {
             .subscribe(
                 onNext: { [weak self] friend in
                     self?.showLoadingHud.value = false
-                    self?.navigateBack.onNext(())
+                    self?.onNavigateBack.onNext(())
                 },
                 onError: { [weak self] error in
                     self?.showLoadingHud.value = false

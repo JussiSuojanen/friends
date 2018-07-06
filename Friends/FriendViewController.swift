@@ -66,7 +66,7 @@ final class FriendViewController: UIViewController {
             }
         ).disposed(by: disposeBag)
 
-        viewModel.navigateBack.asObservable().subscribe(
+        viewModel.onNavigateBack.asObservable().subscribe(
                 onNext: { [weak self] in
                 self?.updateFriends.onNext(())
                 let _ = self?.navigationController?.popViewController(animated: true)

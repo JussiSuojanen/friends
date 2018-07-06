@@ -25,7 +25,7 @@ class AddFriendViewModelTests: XCTestCase {
 
         let expectNavigateCall = expectation(description: "Navigate back is called")
 
-        viewModel.navigateBack.asObservable().debug().subscribe(
+        viewModel.onNavigateBack.asObservable().debug().subscribe(
             onNext: { _ in
                 expectNavigateCall.fulfill()
             }

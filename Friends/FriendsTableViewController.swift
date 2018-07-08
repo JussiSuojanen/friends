@@ -123,7 +123,7 @@ public class FriendsTableViewController: UIViewController {
         {
             switch viewModel.friendCells.value[indexPath.row] {
             case .normal(let viewModel):
-                destinationViewController.viewModel = UpdateFriendViewModel(friend:viewModel.friendItem)
+                destinationViewController.viewModel = UpdateFriendViewModel(friendCellViewModel: viewModel)
                 destinationViewController.updateFriends.asObserver().subscribe(onNext: { [weak self] () in
                     self?.viewModel.getFriends()
                     }, onCompleted: {

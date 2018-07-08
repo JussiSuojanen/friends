@@ -23,7 +23,6 @@ final class UpdateFriendViewModel: FriendViewModel {
         return Observable.combineLatest(firstnameValid, lastnameValid, phoneNumberValid) { $0 && $1 && $2 }
     }
 
-    private let friend: Friend
     private let appServerClient: AppServerClient
 
     private var firstnameValid: Observable<Bool> {
@@ -36,11 +35,13 @@ final class UpdateFriendViewModel: FriendViewModel {
         return phonenumber.asObservable().map { $0.count > 0 }
     }
 
-    init(friend: Friend, appServerClient: AppServerClient = AppServerClient()) {
-        self.friend = friend
-        self.firstname.value = friend.firstname
-        self.lastname.value = friend.lastname
-        self.phonenumber.value = friend.phonenumber
+    private let friendId: Int
+
+    init(friendCellViewModel: FriendCellViewModel, appServerClient: AppServerClient = AppServerClient()) {
+        self.firstname.value = friendCellViewModel.firstname
+        self.lastname.value = friendCellViewModel.lastname
+        self.phonenumber.value = friendCellViewModel.phonenumber
+        self.friendId = friendCellViewModel.id
         self.appServerClient = appServerClient
 
         self.submitButtonTapped.asObserver()
@@ -57,7 +58,7 @@ final class UpdateFriendViewModel: FriendViewModel {
             firstname: firstname.value,
             lastname: lastname.value,
             phonenumber: phonenumber.value,
-            id: friend.id)
+            id: friendId)
             .subscribe(
                 onNext: { [weak self] friend in
                     self?.showLoadingHud.value = false

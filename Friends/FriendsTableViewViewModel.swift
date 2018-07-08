@@ -39,7 +39,7 @@ class FriendsTableViewViewModel {
                         return
                     }
 
-                    self?.friendCells.value = friends.compactMap { .normal(cellViewModel: $0 as FriendCellViewModel) }
+                    self?.friendCells.value = friends.compactMap { .normal(cellViewModel: FriendCellViewModel(friend: $0)) }
                 },
                 onError: { [weak self] error in
                     self?.onShowLoadingHud.value = false
@@ -55,7 +55,7 @@ class FriendsTableViewViewModel {
 
     func delete(friend: FriendCellViewModel) {
         appServerClient
-            .deleteFriend(id: friend.friendItem.id)
+            .deleteFriend(id: friend.id)
             .subscribe(
                 onNext: { [weak self] friends in
                     self?.getFriends()
@@ -63,7 +63,7 @@ class FriendsTableViewViewModel {
                 onError: { [weak self] error in
                     let okAlert = SingleButtonAlert(
                         title: (error as? AppServerClient.DeleteFriendFailureReason)?.getErrorMessage() ?? "Could not connect to server. Check your network and try again later.",
-                        message: "Could not remove \(friend.fullName).",
+                        message: "Could not remove \(friend.firstname) \(friend.lastname).",
                         action: AlertAction(buttonTitle: "OK", handler: { print("Ok pressed!") })
                     )
                     self?.onShowError.onNext(okAlert)

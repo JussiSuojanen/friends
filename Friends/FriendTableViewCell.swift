@@ -20,8 +20,10 @@ class FriendTableViewCell: UITableViewCell {
     }
 
     private func bindViewModel() {
-        labelFullName?.text = viewModel?.fullName
-        labelPhoneNumber?.text = viewModel?.phonenumberText
+        if let viewModel = viewModel {
+            labelFullName?.text = "\(viewModel.firstname) \(viewModel.lastname)"
+            labelPhoneNumber?.text = viewModel.phonenumber
+        }
     }
 }
 

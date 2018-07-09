@@ -13,74 +13,115 @@ class FriendsTableViewViewModelTests: XCTestCase {
 
     // MARK: - getFriend
     func testNormalFriendCells() {
+        let disposeBag = DisposeBag()
         let appServerClient = MockAppServerClient()
         appServerClient.getFriendsResult = .success(payload: [Friend.with()])
 
         let viewModel = FriendsTableViewViewModel(appServerClient: appServerClient)
         viewModel.getFriends()
 
-        guard case .some(.normal(_)) = viewModel.friendCells.value.first else {
-            XCTFail()
-            return
-        }
+        let expectNormalFriendCellCreated = expectation(description: "friendCells contains a normal cell")
+
+        viewModel.friendCells.subscribe(
+            onNext: {
+                if case .some(.normal(_)) = $0.first {
+                    expectNormalFriendCellCreated.fulfill()
+                }
+            }
+        ).disposed(by: disposeBag)
+
+        waitForExpectations(timeout: 0.1, handler: nil)
     }
 
     func testEmptyFriendCells() {
+        let disposeBag = DisposeBag()
         let appServerClient = MockAppServerClient()
         appServerClient.getFriendsResult = .success(payload: [])
 
         let viewModel = FriendsTableViewViewModel(appServerClient: appServerClient)
         viewModel.getFriends()
 
-        guard case .some(.empty) = viewModel.friendCells.value.first else {
-            XCTFail()
-            return
-        }
+        let expectEmptyFriendCellCreated = expectation(description: "friendCells contains an empty cell")
+
+        viewModel.friendCells.subscribe(
+            onNext: {
+                if case .some(.empty) = $0.first {
+                    expectEmptyFriendCellCreated.fulfill()
+                }
+            }
+        ).disposed(by: disposeBag)
+
+        waitForExpectations(timeout: 0.1, handler: nil)
+
     }
 
     func testErrorFriendCells() {
+        let disposeBag = DisposeBag()
         let appServerClient = MockAppServerClient()
         appServerClient.getFriendsResult = .failure(AppServerClient.GetFriendsFailureReason.notFound)
 
         let viewModel = FriendsTableViewViewModel(appServerClient: appServerClient)
         viewModel.getFriends()
 
-        guard case .some(.error(_)) = viewModel.friendCells.value.first else {
-            XCTFail()
-            return
-        }
+        let expectErrorFriendCellCreated = expectation(description: "friendCells contains an error cell")
+
+        viewModel.friendCells.subscribe(
+            onNext: {
+                if case .some(.error) = $0.first {
+                    expectErrorFriendCellCreated.fulfill()
+                }
+            }
+        ).disposed(by: disposeBag)
+
+        waitForExpectations(timeout: 0.1, handler: nil)
     }
 
     // MARK: - Delete friend
     func testDeleteFriendSuccess() {
+        let disposeBag = DisposeBag()
         let appServerClient = MockAppServerClient()
+        let friend = Friend.with()
         appServerClient.deleteFriendResult = .success(payload: ())
-        appServerClient.getFriendsResult = .success(payload: [Friend.with()])
+        appServerClient.getFriendsResult = .success(payload: [friend])
 
         let viewModel = FriendsTableViewViewModel(appServerClient: appServerClient)
         viewModel.getFriends()
 
-        guard case .some(.normal(_)) = viewModel.friendCells.value.first else {
-            XCTFail()
-            return
+        let expectNormalFriendCellCreated = expectation(description: "friendCells contains a normal cell")
+
+        viewModel.friendCells.subscribe(
+            onNext: {
+                if case .some(.normal(_)) = $0.first {
+                    expectNormalFriendCellCreated.fulfill()
+                }
         }
+            ).disposed(by: disposeBag)
+
+        waitForExpectations(timeout: 0.1, handler: nil)
 
         appServerClient.getFriendsResult = .success(payload: [])
-        viewModel.delete(friend: Friend.with())
+        viewModel.delete(friend: FriendCellViewModel(friend: friend))
 
-        guard case .some(.empty) = viewModel.friendCells.value.first else {
-            XCTFail()
-            return
+        let expectEmptyFriendCellCreated = expectation(description: "friendCells contains no cells")
+
+        viewModel.friendCells.subscribe(
+            onNext: {
+                if case .some(.empty) = $0.first {
+                    expectEmptyFriendCellCreated.fulfill()
+                }
         }
+            ).disposed(by: disposeBag)
+
+        waitForExpectations(timeout: 0.1, handler: nil)
     }
 
     func testDeleteFriendFailure() {
         let disposeBag = DisposeBag()
         let appServerClient = MockAppServerClient()
+        let friend = Friend.with()
         appServerClient.deleteFriendResult = .failure(AppServerClient.DeleteFriendFailureReason.notFound)
 
         let viewModel = FriendsTableViewViewModel(appServerClient: appServerClient)
-        viewModel.friendCells.value = [Friend.with()].compactMap { .normal(cellViewModel: $0 as FriendCellViewModel)}
 
         let expectErrorShown = expectation(description: "Error note is shown")
         viewModel.onShowError.subscribe(
@@ -88,7 +129,7 @@ class FriendsTableViewViewModelTests: XCTestCase {
                 expectErrorShown.fulfill()
             }).disposed(by: disposeBag)
 
-        viewModel.delete(friend: Friend.with())
+        viewModel.delete(friend: FriendCellViewModel(friend: friend))
 
         waitForExpectations(timeout: 0.1, handler: nil)
     }

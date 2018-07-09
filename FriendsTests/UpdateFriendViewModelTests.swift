@@ -14,9 +14,10 @@ class UpdateFriendViewModelTests: XCTestCase {
     func testPatchFriendSuccess() {
         let disposeBag = DisposeBag()
         let appServerClient = MockAppServerClient()
-        appServerClient.patchFriendResult = .success(payload: Friend.with())
+        let friend = Friend.with()
+        appServerClient.patchFriendResult = .success(payload: friend)
 
-        let viewModel = UpdateFriendViewModel(friend: Friend.with(), appServerClient: appServerClient)
+        let viewModel = UpdateFriendViewModel(friendCellViewModel: FriendCellViewModel(friend: friend), appServerClient: appServerClient)
 
         let expectNavigateCall = expectation(description: "Navigate back is called")
 
@@ -34,9 +35,10 @@ class UpdateFriendViewModelTests: XCTestCase {
     func testPatchFriendFailure() {
         let disposeBag = DisposeBag()
         let appServerClient = MockAppServerClient()
+        let friend = Friend.with()
         appServerClient.patchFriendResult = .failure(AppServerClient.PatchFriendFailureReason.notFound)
 
-        let viewModel = UpdateFriendViewModel(friend: Friend.with(), appServerClient: appServerClient)
+        let viewModel = UpdateFriendViewModel(friendCellViewModel: FriendCellViewModel(friend: friend), appServerClient: appServerClient)
 
         let expectErrorShown = expectation(description: "OnShowError is called")
 
@@ -53,13 +55,14 @@ class UpdateFriendViewModelTests: XCTestCase {
 
     func testValidateInputSuccess() {
         let disposeBag = DisposeBag()
-        let mockFriend = Friend.with()
+        let friend = Friend.with()
         let appServerClient = MockAppServerClient()
 
-        let viewModel = UpdateFriendViewModel(friend: mockFriend, appServerClient: appServerClient)
-        viewModel.firstname.value = mockFriend.firstname
-        viewModel.lastname.value = mockFriend.lastname
-        viewModel.phonenumber.value = mockFriend.phonenumber
+        let viewModel = UpdateFriendViewModel(friendCellViewModel: FriendCellViewModel(friend: friend), appServerClient: appServerClient)
+
+        viewModel.firstname.value = friend.firstname
+        viewModel.lastname.value = friend.lastname
+        viewModel.phonenumber.value = friend.phonenumber
 
         let expectUpdateSubmitButtonStateCall = expectation(description: "updateSubmitButtonState is called")
 

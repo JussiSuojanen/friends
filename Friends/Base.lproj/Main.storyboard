@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="qDe-bv-cvV">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="qDe-bv-cvV">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -57,7 +57,6 @@
                                 <connections>
                                     <outlet property="labelFullName" destination="UFP-T0-vJt" id="qkx-iu-aBS"/>
                                     <outlet property="labelPhoneNumber" destination="Vub-tL-VEj" id="MwB-cY-Sbr"/>
-                                    <segue destination="WEH-2E-ThT" kind="show" identifier="friendToUpdateFriend" id="6fa-Mt-uIR"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -73,6 +72,7 @@
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="tableView" destination="Qi4-6s-K6M" id="xWZ-Jo-baB"/>
+                        <segue destination="WEH-2E-ThT" kind="show" identifier="friendToUpdateFriend" id="E9u-qn-IGu"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iWr-Dt-KAd" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -250,6 +250,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="UMP-hE-FKl"/>
+        <segue reference="E9u-qn-IGu"/>
     </inferredMetricsTieBreakers>
 </document>

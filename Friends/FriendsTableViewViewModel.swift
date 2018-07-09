@@ -20,7 +20,10 @@ class FriendsTableViewViewModel {
     let appServerClient: AppServerClient
     let disposeBag = DisposeBag()
 
-    var friendCells = Variable<[FriendTableViewCellType]>([])
+    private let cells = Variable<[FriendTableViewCellType]>([])
+    var friendCells: Observable<[FriendTableViewCellType]> {
+        return cells.asObservable()
+    }
 
     init(appServerClient: AppServerClient = AppServerClient()) {
         self.appServerClient = appServerClient
@@ -35,15 +38,15 @@ class FriendsTableViewViewModel {
                 onNext: { [weak self] friends in
                     self?.onShowLoadingHud.value = false
                     guard friends.count > 0 else {
-                        self?.friendCells.value = [.empty]
+                        self?.cells.value = [.empty]
                         return
                     }
 
-                    self?.friendCells.value = friends.compactMap { .normal(cellViewModel: FriendCellViewModel(friend: $0)) }
+                    self?.cells.value = friends.compactMap { .normal(cellViewModel: FriendCellViewModel(friend: $0 )) }
                 },
                 onError: { [weak self] error in
                     self?.onShowLoadingHud.value = false
-                    self?.friendCells.value = [
+                    self?.cells.value = [
                         .error(
                             message: (error as? AppServerClient.GetFriendsFailureReason)?.getErrorMessage() ?? "Loading failed, check network connection"
                         )

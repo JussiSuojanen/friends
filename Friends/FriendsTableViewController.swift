@@ -18,6 +18,8 @@ public class FriendsTableViewController: UIViewController {
 
     private let disposeBag = DisposeBag()
 
+    private var selectFriendPayload = ReadOnce<FriendCellViewModel>(nil)
+
     public override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -29,7 +31,7 @@ public class FriendsTableViewController: UIViewController {
     }
 
     func bindViewModel() {
-        viewModel.friendCells.asObservable().bind(to: self.tableView.rx.items) { tableView, index, element in
+        viewModel.friendCells.bind(to: self.tableView.rx.items) { tableView, index, element in
             let indexPath = IndexPath(item: index, section: 0)
             switch element {
             case .normal(let viewModel):
@@ -79,6 +81,10 @@ public class FriendsTableViewController: UIViewController {
             .modelSelected(FriendTableViewCellType.self)
             .subscribe(
                 onNext: { [weak self] friendCellType in
+                    if case let .normal(viewModel) = friendCellType {
+                        self?.selectFriendPayload = ReadOnce(viewModel)
+                        self?.performSegue(withIdentifier: "friendToUpdateFriend", sender: self)
+                    }
                     if let selectedRowIndexPath = self?.tableView.indexPathForSelectedRow {
                         self?.tableView?.deselectRow(at: selectedRowIndexPath, animated: true)
                     }
@@ -105,6 +111,14 @@ public class FriendsTableViewController: UIViewController {
             .disposed(by: disposeBag)
     }
 
+    public override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        if identifier == "friendToUpdateFriend" {
+            return !selectFriendPayload.isRead
+        }
+
+        return super.shouldPerformSegue(withIdentifier: identifier, sender: sender)
+    }
+
     public override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "friendsToAddFriend",
             let destinationViewController = segue.destination as? FriendViewController
@@ -119,20 +133,14 @@ public class FriendsTableViewController: UIViewController {
 
         if segue.identifier == "friendToUpdateFriend",
             let destinationViewController = segue.destination as? FriendViewController,
-            let indexPath = tableView.indexPathForSelectedRow
+            let viewModel = selectFriendPayload.read()
         {
-            switch viewModel.friendCells.value[indexPath.row] {
-            case .normal(let viewModel):
-                destinationViewController.viewModel = UpdateFriendViewModel(friendCellViewModel: viewModel)
-                destinationViewController.updateFriends.asObserver().subscribe(onNext: { [weak self] () in
-                    self?.viewModel.getFriends()
-                    }, onCompleted: {
-                        print("ONCOMPLETED")
-                }).disposed(by: destinationViewController.disposeBag)
-            case .empty, .error:
-                // nop
-                break
-            }
+            destinationViewController.viewModel = UpdateFriendViewModel(friendCellViewModel: viewModel)
+            destinationViewController.updateFriends.asObserver().subscribe(onNext: { [weak self] () in
+                self?.viewModel.getFriends()
+                }, onCompleted: {
+                    print("ONCOMPLETED")
+            }).disposed(by: destinationViewController.disposeBag)
         }
     }
 }

@@ -15,6 +15,9 @@
 		F4027EF51EA4D03F00191D52 /* FriendsTableViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A6476A1DD6007E00F89F45 /* FriendsTableViewViewModel.swift */; };
 		F4027EF71EA4D15500191D52 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43D01D71E23E11C004084C4 /* Alert.swift */; };
 		F4027EF81EA4D15A00191D52 /* FriendCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A647661DD5F43600F89F45 /* FriendCellViewModel.swift */; };
+		F43BA9C520F27F4C006FB4EC /* ReadOnce.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43BA9C420F27F4C006FB4EC /* ReadOnce.swift */; };
+		F43BA9C620F2891D006FB4EC /* ReadOnce.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43BA9C420F27F4C006FB4EC /* ReadOnce.swift */; };
+		F43BA9C720F2891E006FB4EC /* ReadOnce.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43BA9C420F27F4C006FB4EC /* ReadOnce.swift */; };
 		F43D01D11E1FBCDC004084C4 /* FriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43D01D01E1FBCDC004084C4 /* FriendViewController.swift */; };
 		F43D01D31E1FBCF1004084C4 /* AddFriendViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43D01D21E1FBCF1004084C4 /* AddFriendViewModel.swift */; };
 		F43D01D81E23E11C004084C4 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43D01D71E23E11C004084C4 /* Alert.swift */; };
@@ -111,6 +114,7 @@
 		E579CFFD65CA5DC90F63BC2D /* Pods-FriendsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FriendsTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-FriendsTests/Pods-FriendsTests.release.xcconfig"; sourceTree = "<group>"; };
 		F4027EF01EA4CC2A00191D52 /* FriendsTableViewViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsTableViewViewModelTests.swift; sourceTree = "<group>"; };
 		F4027EF31EA4CE8D00191D52 /* MockFriend.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockFriend.swift; sourceTree = "<group>"; };
+		F43BA9C420F27F4C006FB4EC /* ReadOnce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadOnce.swift; sourceTree = "<group>"; };
 		F43D01D01E1FBCDC004084C4 /* FriendViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendViewController.swift; sourceTree = "<group>"; };
 		F43D01D21E1FBCF1004084C4 /* AddFriendViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddFriendViewModel.swift; sourceTree = "<group>"; };
 		F43D01D71E23E11C004084C4 /* Alert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
@@ -229,6 +233,7 @@
 				F43D01D71E23E11C004084C4 /* Alert.swift */,
 				F442146B1E4622990006E18F /* Result.swift */,
 				F442146D1E4624340006E18F /* JSON.swift */,
+				F43BA9C420F27F4C006FB4EC /* ReadOnce.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -682,6 +687,7 @@
 			files = (
 				F445F7D6201C98F500D16385 /* AddFriendViewModel.swift in Sources */,
 				F445F7DE201CA9B400D16385 /* JSON.swift in Sources */,
+				F43BA9C720F2891E006FB4EC /* ReadOnce.swift in Sources */,
 				F445F7D5201C98F000D16385 /* FriendViewController.swift in Sources */,
 				F445F7D4201C98EB00D16385 /* FriendsTableViewViewModel.swift in Sources */,
 				F445F7D0201C97BA00D16385 /* FriendsTableViewController.swift in Sources */,
@@ -709,6 +715,7 @@
 				F4C566641DD0E9F600E61578 /* FriendsTableViewController.swift in Sources */,
 				F4A647651DD5F42400F89F45 /* FriendTableViewCell.swift in Sources */,
 				F4C566621DD0E9F600E61578 /* AppDelegate.swift in Sources */,
+				F43BA9C520F27F4C006FB4EC /* ReadOnce.swift in Sources */,
 				F4A647671DD5F43600F89F45 /* FriendCellViewModel.swift in Sources */,
 				F43D01D31E1FBCF1004084C4 /* AddFriendViewModel.swift in Sources */,
 				F43D01D81E23E11C004084C4 /* Alert.swift in Sources */,
@@ -725,6 +732,7 @@
 				F4E46A511EA4C29100D9675A /* Result.swift in Sources */,
 				F4B59A711EAB4D230038F484 /* UpdateFriendViewModelTests.swift in Sources */,
 				F4027EF11EA4CC2A00191D52 /* FriendsTableViewViewModelTests.swift in Sources */,
+				F43BA9C620F2891D006FB4EC /* ReadOnce.swift in Sources */,
 				F4C566771DD0E9F600E61578 /* FriendTests.swift in Sources */,
 				F4B59A721EAB4E230038F484 /* UpdateFriendViewModel.swift in Sources */,
 				F4F797C31EAD35FD00B6390D /* AlertTests.swift in Sources */,

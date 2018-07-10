@@ -54,17 +54,12 @@ final class FriendViewController: UIViewController {
             .bind(to: viewModel.submitButtonTapped)
             .disposed(by: disposeBag)
 
-        viewModel.showLoadingHud.asObservable().subscribe(
-            onNext: { [weak self] visible in
-                self?.setLoadingHud(visible: visible)
-            },
-            onError: { [weak self] _ in
-                self?.setLoadingHud(visible: false)
-            },
-            onCompleted: { [weak self] in
-                self?.setLoadingHud(visible: false)
-            }
-        ).disposed(by: disposeBag)
+        viewModel
+            .onShowLoadingHud
+            .asObservable()
+            .map { [weak self] in self?.setLoadingHud(visible: $0) }
+            .subscribe()
+            .disposed(by: disposeBag)
 
         viewModel.onNavigateBack.asObservable().subscribe(
                 onNext: { [weak self] in

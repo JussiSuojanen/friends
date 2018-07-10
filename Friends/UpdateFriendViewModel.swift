@@ -11,13 +11,19 @@ final class UpdateFriendViewModel: FriendViewModel {
     let onShowError = PublishSubject<SingleButtonAlert>()
     let onNavigateBack = PublishSubject<Void>()
     let submitButtonTapped = PublishSubject<Void>()
-    let showLoadingHud = Variable(false)
     let disposeBag = DisposeBag()
 
     var title = Variable<String>("Update Friend")
     var firstname = Variable<String>("")
     var lastname = Variable<String>("")
     var phonenumber = Variable<String>("")
+    var onShowLoadingHud: Observable<Bool> {
+        return loadInProgress
+            .asObservable()
+            .distinctUntilChanged()
+    }
+
+    private let loadInProgress = Variable(false)
 
     var submitButtonEnabled: Observable<Bool> {
         return Observable.combineLatest(firstnameValid, lastnameValid, phoneNumberValid) { $0 && $1 && $2 }
@@ -52,7 +58,7 @@ final class UpdateFriendViewModel: FriendViewModel {
     }
 
     private func submitFriend() {
-        showLoadingHud.value = true
+        loadInProgress.value = true
 
         appServerClient.patchFriend(
             firstname: firstname.value,
@@ -61,11 +67,11 @@ final class UpdateFriendViewModel: FriendViewModel {
             id: friendId)
             .subscribe(
                 onNext: { [weak self] friend in
-                    self?.showLoadingHud.value = false
+                    self?.loadInProgress.value = false
                     self?.onNavigateBack.onNext(())
                 },
                 onError: { [weak self] error in
-                    self?.showLoadingHud.value = false
+                    self?.loadInProgress.value = false
                     let okAlert = SingleButtonAlert(
                         title: (error as? AppServerClient.PatchFriendFailureReason)?.getErrorMessage() ?? "Could not connect to server. Check your network and try again later.",
                         message: "Failed to update information.",

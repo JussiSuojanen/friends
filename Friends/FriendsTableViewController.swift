@@ -59,15 +59,12 @@ public class FriendsTableViewController: UIViewController {
             }
         ).disposed(by: disposeBag)
 
-        viewModel.onShowLoadingHud.asObservable().subscribe(
-            onNext: { [weak self] visible in
-                self?.setLoadingHud(visible: visible)
-            },
-            onCompleted: { [weak self] in
-                self?.setLoadingHud(visible: false)
-            }
-        ).disposed(by: disposeBag)
 
+        viewModel
+            .onShowLoadingHud
+            .map { [weak self] in self?.setLoadingHud(visible: $0) }
+            .subscribe()
+            .disposed(by: disposeBag)
     }
 
     private func setLoadingHud(visible: Bool) {

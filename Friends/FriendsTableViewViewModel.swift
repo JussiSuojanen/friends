@@ -15,28 +15,34 @@ enum FriendTableViewCellType {
 }
 
 class FriendsTableViewViewModel {
-    let onShowError = PublishSubject<SingleButtonAlert>()
-    let onShowLoadingHud = Variable(false)
-    let appServerClient: AppServerClient
-    let disposeBag = DisposeBag()
-
-    private let cells = Variable<[FriendTableViewCellType]>([])
     var friendCells: Observable<[FriendTableViewCellType]> {
         return cells.asObservable()
     }
+    var onShowLoadingHud: Observable<Bool> {
+        return loadInProgress
+            .asObservable()
+            .distinctUntilChanged()
+    }
+
+    let onShowError = PublishSubject<SingleButtonAlert>()
+    let appServerClient: AppServerClient
+    let disposeBag = DisposeBag()
+
+    private let loadInProgress = Variable(false)
+    private let cells = Variable<[FriendTableViewCellType]>([])
 
     init(appServerClient: AppServerClient = AppServerClient()) {
         self.appServerClient = appServerClient
     }
 
     func getFriends() {
-        onShowLoadingHud.value = true
+        loadInProgress.value = true
 
         appServerClient
             .getFriends()
             .subscribe(
                 onNext: { [weak self] friends in
-                    self?.onShowLoadingHud.value = false
+                    self?.loadInProgress.value = false
                     guard friends.count > 0 else {
                         self?.cells.value = [.empty]
                         return
@@ -45,7 +51,7 @@ class FriendsTableViewViewModel {
                     self?.cells.value = friends.compactMap { .normal(cellViewModel: FriendCellViewModel(friend: $0 )) }
                 },
                 onError: { [weak self] error in
-                    self?.onShowLoadingHud.value = false
+                    self?.loadInProgress.value = false
                     self?.cells.value = [
                         .error(
                             message: (error as? AppServerClient.GetFriendsFailureReason)?.getErrorMessage() ?? "Loading failed, check network connection"

@@ -23,13 +23,13 @@ final class UpdateFriendViewModel: FriendViewModel {
             .distinctUntilChanged()
     }
 
-    private let loadInProgress = Variable(false)
-
     var submitButtonEnabled: Observable<Bool> {
         return Observable.combineLatest(firstnameValid, lastnameValid, phoneNumberValid) { $0 && $1 && $2 }
     }
 
+    private let loadInProgress = Variable(false)
     private let appServerClient: AppServerClient
+    private let friendId: Int
 
     private var firstnameValid: Observable<Bool> {
         return firstname.asObservable().map { $0.count > 0 }
@@ -40,8 +40,6 @@ final class UpdateFriendViewModel: FriendViewModel {
     private var phoneNumberValid: Observable<Bool> {
         return phonenumber.asObservable().map { $0.count > 0 }
     }
-
-    private let friendId: Int
 
     init(friendCellViewModel: FriendCellViewModel, appServerClient: AppServerClient = AppServerClient()) {
         self.firstname.value = friendCellViewModel.firstname

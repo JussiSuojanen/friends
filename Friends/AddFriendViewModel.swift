@@ -10,8 +10,8 @@ import RxSwift
 
 protocol FriendViewModel {
     var title: Variable<String> { get }
-    var firstname: Variable<String> { get set }
-    var lastname: Variable<String> { get set }
+    var firstname: Variable<String> { get }
+    var lastname: Variable<String> { get }
     var phonenumber: Variable<String> { get }
     var submitButtonTapped: PublishSubject<Void> { get }
     var onShowLoadingHud: Observable<Bool> { get }

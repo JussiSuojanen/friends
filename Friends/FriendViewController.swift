@@ -15,14 +15,14 @@ final class FriendViewController: UIViewController {
     @IBOutlet weak var textFieldFirstname: UITextField!
     @IBOutlet weak var textFieldLastname: UITextField!
     @IBOutlet weak var textFieldPhoneNumber: UITextField!
-
     @IBOutlet weak var buttonSubmit: UIButton!
 
     var viewModel: FriendViewModel?
     var updateFriends = PublishSubject<Void>()
 
-    fileprivate var activeTextField: UITextField?
     let disposeBag = DisposeBag()
+
+    private var activeTextField: UITextField?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,7 +36,7 @@ final class FriendViewController: UIViewController {
     }
 
     func bindViewModel() {
-        guard var viewModel = viewModel else {
+        guard let viewModel = viewModel else {
             return
         }
 

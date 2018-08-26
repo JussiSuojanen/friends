@@ -9,7 +9,6 @@
 import UIKit
 
 class FriendTableViewCell: UITableViewCell {
-
     @IBOutlet weak var labelFullName: UILabel!
     @IBOutlet weak var labelPhoneNumber: UILabel!
 

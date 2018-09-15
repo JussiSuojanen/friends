@@ -61,14 +61,18 @@ final class FriendViewController: UIViewController {
             .subscribe()
             .disposed(by: disposeBag)
 
-        viewModel.onNavigateBack.asObservable().subscribe(
+        viewModel
+            .onNavigateBack
+            .asObservable()
+            .subscribe(
                 onNext: { [weak self] in
-                self?.updateFriends.onNext(())
-                let _ = self?.navigationController?.popViewController(animated: true)
-            }
-        ).disposed(by: disposeBag)
+                    self?.updateFriends.onNext(())
+                    let _ = self?.navigationController?.popViewController(animated: true)
+                }
+            ).disposed(by: disposeBag)
 
-        viewModel.onShowError
+        viewModel
+            .onShowError
             .map { [weak self] in self?.presentSingleButtonDialog(alert: $0)}
             .subscribe()
             .disposed(by: disposeBag)

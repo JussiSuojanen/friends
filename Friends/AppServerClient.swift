@@ -24,15 +24,13 @@ class AppServerClient {
                 .responseJSON { response in
                     switch response.result {
                     case .success:
+                        guard let data = response.data else {
+                            // if no error provided by alamofire return .notFound error instead.
+                            // .notFound should never happen here?
+                            observer.onError(response.error ?? GetFriendsFailureReason.notFound)
+                            return
+                        }
                         do {
-                            guard let data = response.data else {
-                                // want to avoid !-mark for unwrapping. Incase there is no data and
-                                // no error provided by alamofire return .notFound error instead.
-                                // .notFound should never happen here?
-                                observer.onError(response.error ?? GetFriendsFailureReason.notFound)
-                                return
-                            }
-
                             let friends = try JSONDecoder().decode([Friend].self, from: data)
                             observer.onNext(friends)
                         } catch {

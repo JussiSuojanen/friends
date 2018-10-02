@@ -18,7 +18,6 @@ class FriendsTableViewViewModelTests: XCTestCase {
         appServerClient.getFriendsResult = .success(payload: [Friend.with()])
 
         let viewModel = FriendsTableViewViewModel(appServerClient: appServerClient)
-        viewModel.getFriends()
 
         let expectNormalFriendCellCreated = expectation(description: "friendCells contains a normal cell")
 
@@ -30,7 +29,9 @@ class FriendsTableViewViewModelTests: XCTestCase {
             }
         ).disposed(by: disposeBag)
 
-        waitForExpectations(timeout: 0.1, handler: nil)
+        viewModel.getFriends()
+        
+        wait(for: [expectNormalFriendCellCreated], timeout: 0.1)
     }
 
     func testEmptyFriendCells() {
@@ -39,7 +40,6 @@ class FriendsTableViewViewModelTests: XCTestCase {
         appServerClient.getFriendsResult = .success(payload: [])
 
         let viewModel = FriendsTableViewViewModel(appServerClient: appServerClient)
-        viewModel.getFriends()
 
         let expectEmptyFriendCellCreated = expectation(description: "friendCells contains an empty cell")
 
@@ -50,9 +50,10 @@ class FriendsTableViewViewModelTests: XCTestCase {
                 }
             }
         ).disposed(by: disposeBag)
+        
+        viewModel.getFriends()
 
-        waitForExpectations(timeout: 0.1, handler: nil)
-
+        wait(for: [expectEmptyFriendCellCreated],timeout: 0.1)
     }
 
     func testErrorFriendCells() {
@@ -61,7 +62,6 @@ class FriendsTableViewViewModelTests: XCTestCase {
         appServerClient.getFriendsResult = .failure(AppServerClient.GetFriendsFailureReason.notFound)
 
         let viewModel = FriendsTableViewViewModel(appServerClient: appServerClient)
-        viewModel.getFriends()
 
         let expectErrorFriendCellCreated = expectation(description: "friendCells contains an error cell")
 
@@ -72,8 +72,10 @@ class FriendsTableViewViewModelTests: XCTestCase {
                 }
             }
         ).disposed(by: disposeBag)
+        
+        viewModel.getFriends()
 
-        waitForExpectations(timeout: 0.1, handler: nil)
+        wait(for: [expectErrorFriendCellCreated],timeout: 0.1)
     }
 
     // MARK: - Delete friend
@@ -85,7 +87,6 @@ class FriendsTableViewViewModelTests: XCTestCase {
         appServerClient.getFriendsResult = .success(payload: [friend])
 
         let viewModel = FriendsTableViewViewModel(appServerClient: appServerClient)
-        viewModel.getFriends()
 
         let expectNormalFriendCellCreated = expectation(description: "friendCells contains a normal cell")
 
@@ -94,13 +95,14 @@ class FriendsTableViewViewModelTests: XCTestCase {
                 if case .some(.normal(_)) = $0.first {
                     expectNormalFriendCellCreated.fulfill()
                 }
-        }
-            ).disposed(by: disposeBag)
+            }
+        ).disposed(by: disposeBag)
+
+        viewModel.getFriends()
 
         waitForExpectations(timeout: 0.1, handler: nil)
 
         appServerClient.getFriendsResult = .success(payload: [])
-        viewModel.delete(friend: FriendCellViewModel(friend: friend))
 
         let expectEmptyFriendCellCreated = expectation(description: "friendCells contains no cells")
 
@@ -109,10 +111,12 @@ class FriendsTableViewViewModelTests: XCTestCase {
                 if case .some(.empty) = $0.first {
                     expectEmptyFriendCellCreated.fulfill()
                 }
-        }
-            ).disposed(by: disposeBag)
+            }
+        ).disposed(by: disposeBag)
+        
+        viewModel.delete(friend: FriendCellViewModel(friend: friend))
 
-        waitForExpectations(timeout: 0.1, handler: nil)
+        wait(for: [expectEmptyFriendCellCreated], timeout: 0.1)
     }
 
     func testDeleteFriendFailure() {
@@ -131,7 +135,7 @@ class FriendsTableViewViewModelTests: XCTestCase {
 
         viewModel.delete(friend: FriendCellViewModel(friend: friend))
 
-        waitForExpectations(timeout: 0.1, handler: nil)
+        wait(for: [expectErrorShown], timeout: 0.1)
     }
 }
 

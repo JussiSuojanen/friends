@@ -29,7 +29,7 @@ class UpdateFriendViewModelTests: XCTestCase {
 
         viewModel.submitButtonTapped.onNext(())
 
-        waitForExpectations(timeout: 0.1, handler: nil)
+        wait(for: [expectNavigateCall], timeout: 0.1)
     }
 
     func testPatchFriendFailure() {
@@ -50,7 +50,7 @@ class UpdateFriendViewModelTests: XCTestCase {
 
         viewModel.submitButtonTapped.onNext(())
 
-        waitForExpectations(timeout: 0.1, handler: nil)
+        wait(for: [expectErrorShown], timeout: 0.1)
     }
 
     func testValidateInputSuccess() {
@@ -73,7 +73,7 @@ class UpdateFriendViewModelTests: XCTestCase {
             }
         ).disposed(by: disposeBag)
 
-        waitForExpectations(timeout: 0.1, handler: nil)
+        wait(for: [expectUpdateSubmitButtonStateCall], timeout: 0.1)
     }
 
 }

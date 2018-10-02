@@ -33,7 +33,7 @@ class AddFriendViewModelTests: XCTestCase {
 
         viewModel.submitButtonTapped.onNext(())
 
-        waitForExpectations(timeout: 0.1, handler: nil)
+        wait(for: [expectNavigateCall], timeout: 0.1)
     }
 
     func testAddFriendFailure() {
@@ -58,7 +58,7 @@ class AddFriendViewModelTests: XCTestCase {
 
         viewModel.submitButtonTapped.onNext(())
 
-        waitForExpectations(timeout: 0.1, handler: nil)
+        wait(for: [expectErrorShown], timeout: 0.1)
     }
 
     func testValidateInputSuccess() {
@@ -75,12 +75,13 @@ class AddFriendViewModelTests: XCTestCase {
 
         viewModel.submitButtonEnabled.subscribe(
             onNext: { state in
-                XCTAssert(state == true, "testValidateInputData failed. Data should be valid")
+                guard state else { return }
+
                 expectUpdateSubmitButtonStateCall.fulfill()
             }
         ).disposed(by: disposeBag)
 
-        waitForExpectations(timeout: 0.1, handler: nil)
+        wait(for: [expectUpdateSubmitButtonStateCall], timeout: 0.1)
     }
 
 }

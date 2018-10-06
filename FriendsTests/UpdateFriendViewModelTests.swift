@@ -68,7 +68,7 @@ class UpdateFriendViewModelTests: XCTestCase {
 
         viewModel.submitButtonEnabled.subscribe(
             onNext: { state in
-                XCTAssert(state == true, "testValidateInputData failed. Data should be valid")
+                XCTAssertTrue(state, "testValidateInputData failed. Data should be valid")
                 expectUpdateSubmitButtonStateCall.fulfill()
             }
         ).disposed(by: disposeBag)

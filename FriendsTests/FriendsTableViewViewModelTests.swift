@@ -18,18 +18,24 @@ class FriendsTableViewViewModelTests: XCTestCase {
         appServerClient.getFriendsResult = .success(payload: [Friend.with()])
 
         let viewModel = FriendsTableViewViewModel(appServerClient: appServerClient)
+        viewModel.getFriends()
 
         let expectNormalFriendCellCreated = expectation(description: "friendCells contains a normal cell")
 
         viewModel.friendCells.subscribe(
             onNext: {
-                if case .some(.normal(_)) = $0.first {
-                    expectNormalFriendCellCreated.fulfill()
+                let firstCellIsNormal: Bool
+
+                if case.some(.normal(_)) = $0.first {
+                    firstCellIsNormal = true
+                } else {
+                    firstCellIsNormal = false
                 }
+
+                XCTAssertTrue(firstCellIsNormal)
+                expectNormalFriendCellCreated.fulfill()
             }
         ).disposed(by: disposeBag)
-
-        viewModel.getFriends()
         
         wait(for: [expectNormalFriendCellCreated], timeout: 0.1)
     }
@@ -40,18 +46,24 @@ class FriendsTableViewViewModelTests: XCTestCase {
         appServerClient.getFriendsResult = .success(payload: [])
 
         let viewModel = FriendsTableViewViewModel(appServerClient: appServerClient)
+        viewModel.getFriends()
 
         let expectEmptyFriendCellCreated = expectation(description: "friendCells contains an empty cell")
 
         viewModel.friendCells.subscribe(
             onNext: {
-                if case .some(.empty) = $0.first {
-                    expectEmptyFriendCellCreated.fulfill()
+                let firstCellIsEmpty: Bool
+
+                if case.some(.empty) = $0.first {
+                    firstCellIsEmpty = true
+                } else {
+                    firstCellIsEmpty = false
                 }
+
+                XCTAssertTrue(firstCellIsEmpty)
+                expectEmptyFriendCellCreated.fulfill()
             }
         ).disposed(by: disposeBag)
-        
-        viewModel.getFriends()
 
         wait(for: [expectEmptyFriendCellCreated],timeout: 0.1)
     }
@@ -62,18 +74,24 @@ class FriendsTableViewViewModelTests: XCTestCase {
         appServerClient.getFriendsResult = .failure(AppServerClient.GetFriendsFailureReason.notFound)
 
         let viewModel = FriendsTableViewViewModel(appServerClient: appServerClient)
+        viewModel.getFriends()
 
         let expectErrorFriendCellCreated = expectation(description: "friendCells contains an error cell")
 
         viewModel.friendCells.subscribe(
             onNext: {
-                if case .some(.error) = $0.first {
-                    expectErrorFriendCellCreated.fulfill()
+                let firstCellIsError: Bool
+
+                if case.some(.error) = $0.first {
+                    firstCellIsError = true
+                } else {
+                    firstCellIsError = false
                 }
+
+                XCTAssertTrue(firstCellIsError)
+                expectErrorFriendCellCreated.fulfill()
             }
         ).disposed(by: disposeBag)
-        
-        viewModel.getFriends()
 
         wait(for: [expectErrorFriendCellCreated],timeout: 0.1)
     }

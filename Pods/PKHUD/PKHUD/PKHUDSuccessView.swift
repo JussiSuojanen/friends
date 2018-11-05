@@ -21,9 +21,17 @@ open class PKHUDSuccessView: PKHUDSquareBaseView, PKHUDAnimating {
         let layer = CAShapeLayer()
         layer.frame = CGRect(x: 3.0, y: 3.0, width: 88.0, height: 56.0)
         layer.path = checkmarkPath.cgPath
-        layer.fillMode = kCAFillModeForwards
+
+        #if swift(>=4.2)
+        layer.fillMode    = .forwards
+        layer.lineCap     = .round
+        layer.lineJoin    = .round
+        #else
+        layer.fillMode    = kCAFillModeForwards
         layer.lineCap     = kCALineCapRound
         layer.lineJoin    = kCALineJoinRound
+        #endif
+
         layer.fillColor   = nil
         layer.strokeColor = UIColor(red: 0.15, green: 0.15, blue: 0.15, alpha: 1.0).cgColor
         layer.lineWidth   = 6.0
@@ -43,12 +51,12 @@ open class PKHUDSuccessView: PKHUDSquareBaseView, PKHUDAnimating {
     }
 
     open func startAnimation() {
-        let checkmarkStrokeAnimation = CAKeyframeAnimation(keyPath:"strokeEnd")
+        let checkmarkStrokeAnimation = CAKeyframeAnimation(keyPath: "strokeEnd")
         checkmarkStrokeAnimation.values = [0, 1]
         checkmarkStrokeAnimation.keyTimes = [0, 1]
         checkmarkStrokeAnimation.duration = 0.35
 
-        checkmarkShapeLayer.add(checkmarkStrokeAnimation, forKey:"checkmarkStrokeAnim")
+        checkmarkShapeLayer.add(checkmarkStrokeAnimation, forKey: "checkmarkStrokeAnim")
     }
 
     open func stopAnimation() {

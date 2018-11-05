@@ -96,7 +96,7 @@ You can also hot-swap content views - this can prove useful if you want to displ
 HUD.show(.progress)
         
 // Now some long running task starts...
-delay(2.0) {
+DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
     // ...and once it finishes we flash the HUD for a second.
    HUD.flash(.success, delay: 1.0)
 }
@@ -131,6 +131,9 @@ PKHUD is owned and maintained by Philip Kluz. Other mantainers are:
 
 - Piergiuseppe Longo [twitter](https://twitter.com/pglongo)
 
+## Xamarin
+
+If you are Xamarin developer you can use this [port](https://github.com/Prin53/Xamarin.iOS.PKHUD).
 
 ## License
 

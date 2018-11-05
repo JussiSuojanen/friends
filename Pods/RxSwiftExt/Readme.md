@@ -1,9 +1,11 @@
-[![Build Status](https://travis-ci.org/RxSwiftCommunity/RxSwiftExt.svg?branch=master)](https://travis-ci.org/RxSwiftCommunity/RxSwiftExt) ![pod](https://img.shields.io/cocoapods/v/RxSwiftExt.svg) [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
+[![CircleCI](https://img.shields.io/circleci/project/github/RxSwiftCommunity/RxSwiftExt/master.svg)](https://circleci.com/gh/RxSwiftCommunity/RxSwiftExt/tree/master)
+![pod](https://img.shields.io/cocoapods/v/RxSwiftExt.svg)
+[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
 RxSwiftExt
 ===========
 
-If you're using [RxSwift](https://github.com/ReactiveX/RxSwift), you may have encountered situations where the built-in operators do not bring the exact functionality you want. The RxSwift core is being intentionally kept as compact as possible to avoid bloat. This repository's purpose is to provide additional convenience operators.
+If you're using [RxSwift](https://github.com/ReactiveX/RxSwift), you may have encountered situations where the built-in operators do not bring the exact functionality you want. The RxSwift core is being intentionally kept as compact as possible to avoid bloat. This repository's purpose is to provide additional convenience operators and Reactive Extensions.
 
 Installation
 ===========
@@ -12,7 +14,6 @@ This branch of RxSwiftExt targets Swift 4.x and RxSwift 4.0.0 or later.
 
 * If you're looking for the Swift 3 version of RxSwiftExt, please use version `2.5.1` of the framework.
 * If your project is running on Swift 2.x, please use version `1.2` of the framework.
-
 
 #### CocoaPods
 
@@ -42,11 +43,14 @@ Add this to your `Cartfile`
 github "RxSwiftCommunity/RxSwiftExt"
 ```
 
-
 Operators
 ===========
 
-RxSwiftExt is all about adding operators to [RxSwift](https://github.com/ReactiveX/RxSwift)! Currently available operators:
+RxSwiftExt is all about adding operators and Reactive Extensions to [RxSwift](https://github.com/ReactiveX/RxSwift)!
+
+## Operators
+
+These operators are much like the RxSwift & RxCocoa core operators, but provide additional useful abilities to your Rx arsenal.
 
 * [unwrap](#unwrap)
 * [ignore](#ignore)
@@ -66,13 +70,23 @@ RxSwiftExt is all about adding operators to [RxSwift](https://github.com/Reactiv
 * [apply](#apply)
 * [filterMap](#filtermap)
 * [Observable.fromAsync](#fromasync)
+* [Observable.zip(with:)](#zipwith)
+* [withUnretained](#withunretained)
 
-Two additional operators are available for `materialize()`'d sequences:
+There are two more available operators for `materialize()`'d sequences:
 
 * [errors](#errors-elements)
 * [elements](#errors-elements)
 
 Read below for details about each operator.
+
+## Reactive Extensions
+
+RxSwift/RxCocoa Reactive Extensions are provided to enhance existing objects and classes from the Apple-ecosystem with Reactive abilities.
+
+* [UIViewPropertyAnimator.animate](#uiviewpropertyanimatoranimate)
+
+--------
 
 Operator details
 ===========
@@ -150,7 +164,7 @@ completed
 Pass elements through only if they were never seen before in the sequence.
 
 ```swift
-    Observable.of("a","b","a","c","b","a","d")
+Observable.of("a","b","a","c","b","a","d")
     .distinct()
     .subscribe { print($0) }
 ```
@@ -178,6 +192,30 @@ next(Nope.)
 completed
 ```
 
+#### mapAt
+
+Transform every element to the value at the provided key path.
+
+```swift
+struct Person {
+    let name: String
+}
+
+Observable
+    .of(
+        Person(name: "Bart"),
+        Person(name: "Lisa"),
+        Person(name: "Maggie")
+    )
+    .mapAt(\.name)
+    .subscribe { print($0) }
+```
+```
+next(Bart)
+next(Lisa)
+next(Maggie)
+completed
+```
 #### not
 
 Negate booleans.
@@ -201,11 +239,11 @@ Verifies that every value emitted is `true`
 Observable.of(true, true)
 	.and()
 	.subscribe { print($0) }
-	
+
 Observable.of(true, false)
 	.and()
 	.subscribe { print($0) }
-	
+
 Observable<Bool>.empty()
 	.and()
 	.subscribe { print($0) }
@@ -268,8 +306,8 @@ completed
 
 #### retry
 
-Repeats the source observable sequence using given behavior in case of an error or until it successfully terminated. 
-There are four behaviors with various predicate and delay options: `immediate`, `delayed`, `exponentialDelayed` and 
+Repeats the source observable sequence using given behavior in case of an error or until it successfully terminated.
+There are four behaviors with various predicate and delay options: `immediate`, `delayed`, `exponentialDelayed` and
 `customTimerDelayed`.
 
 ```swift
@@ -441,6 +479,105 @@ observableService("Foo", 0)
     .disposed(by: disposeBag)
 ```
 
+#### zipWith
+
+Convenience version of `Observable.zip(_:)`. Merges the specified observable sequences into one observable sequence by using the selector function whenever all
+ of the observable sequences have produced an element at a corresponding index.
+
+```
+let first = Observable.from(numbers)
+let second = Observable.from(strings)
+
+first.zip(with: second) { i, s in
+        s + String(i)
+    }.subscribe(onNext: { (result) in
+        print(result)
+    })
+```
+
+```
+next("a1")
+next("b2")
+next("c3")
+```
+
+#### ofType
+
+The ofType operator filters the elements of an observable sequence, if that is an instance of the supplied type.
+
+```swift
+Observable.of(NSNumber(value: 1),
+                  NSDecimalNumber(string: "2"),
+                  NSNumber(value: 3),
+                  NSNumber(value: 4),
+                  NSDecimalNumber(string: "5"),
+                  NSNumber(value: 6))
+        .ofType(NSDecimalNumber.self)
+        .subscribe { print($0) }
+```
+```
+next(2)
+next(5)
+completed
+```
+This example emits 2, 5 (`NSDecimalNumber` Type).
+
+#### withUnretained
+
+The `withUnretained(_:resultSelector:)` operator provides an unretained, safe to use (i.e. not implicitly unwrapped), reference to an object along with the events emitted by the sequence.
+In the case the provided object cannot be retained successfully, the seqeunce will complete.
+
+```swift
+class TestClass: CustomStringConvertible {
+    var description: String { return "Test Class" }
+}
+
+Observable
+    .of(1, 2, 3, 5, 8, 13, 18, 21, 23)
+    .withUnretained(testClass)
+    .do(onNext: { _, value in
+        if value == 13 {
+            // When testClass becomes nil, the next emission of the original
+            // sequence will try to retain it and fail. As soon as it fails,
+            // the sequence will complete.
+            testClass = nil
+        }
+    })
+    .subscribe()
+```
+
+```
+next((Test Class, 1))
+next((Test Class, 2))
+next((Test Class, 3))
+next((Test Class, 5))
+next((Test Class, 8))
+next((Test Class, 13))
+completed
+```
+
+Reactive Extensions details
+===========
+
+#### UIViewPropertyAnimator.animate
+
+The `animate(afterDelay:)` operator provides a Completable that triggers the animation upon subscription and completes when the animation ends.
+
+```swift
+button.rx.tap
+    .flatMap {
+        animator1.rx.animate()
+            .andThen(animator2.rx.animate(afterDelay: 0.15))
+            .andThen(animator3.rx.animate(afterDelay: 0.1))
+    }
+```
+
+#### UIViewPropertyAnimator.fractionComplete
+The `fractionComplete` binder provides a reactive way to bind to `UIViewPropertyAnimator.fractionComplete`.
+```swift
+slider.rx.value.map(CGFloat.init)
+    .bind(to: animator.rx.fractionComplete)
+```
 ## License
 
 This library belongs to _RxSwiftCommunity_.

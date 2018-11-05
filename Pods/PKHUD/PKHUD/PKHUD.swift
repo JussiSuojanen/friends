@@ -55,9 +55,16 @@ open class PKHUD: NSObject {
 
     public override init () {
         super.init()
+
+        #if swift(>=4.2)
+        let notificationName = UIApplication.willEnterForegroundNotification
+        #else
+        let notificationName = NSNotification.Name.UIApplicationWillEnterForeground
+        #endif
+
         NotificationCenter.default.addObserver(self,
             selector: #selector(PKHUD.willEnterForeground(_:)),
-            name: NSNotification.Name.UIApplicationWillEnterForeground,
+            name: notificationName,
             object: nil)
         userInteractionOnUnderlyingViewsEnabled = false
         container.frameView.autoresizingMask = [ .flexibleLeftMargin,
@@ -111,6 +118,10 @@ open class PKHUD: NSObject {
         }
     }
 
+    open var leadingMargin: CGFloat = 0
+
+    open var trailingMargin: CGFloat = 0
+
     open func show(onView view: UIView? = nil) {
         let view: UIView = view ?? viewToPresentOn ?? UIApplication.shared.keyWindow!
         if  !view.subviews.contains(container) {
@@ -127,7 +138,11 @@ open class PKHUD: NSObject {
         // If the grace time is set, postpone the HUD display
         if gracePeriod > 0.0 {
             let timer = Timer(timeInterval: gracePeriod, target: self, selector: #selector(PKHUD.handleGraceTimer(_:)), userInfo: nil, repeats: false)
+            #if swift(>=4.2)
+            RunLoop.current.add(timer, forMode: .common)
+            #else
             RunLoop.current.add(timer, forMode: .commonModes)
+            #endif
             graceTimer = timer
         } else {
             showContent()
@@ -187,7 +202,7 @@ open class PKHUD: NSObject {
     // MARK: Timer callbacks
 
     @objc internal func performDelayedHide(_ timer: Timer? = nil) {
-        let userInfo = timer?.userInfo as? [String:AnyObject]
+        let userInfo = timer?.userInfo as? [String: AnyObject]
         let key = userInfo?["timerActionKey"] as? String
         var completion: TimerAction?
 

@@ -7,12 +7,13 @@
 //
 
 import RxSwift
+import RxCocoa
 
 protocol FriendViewModel {
-    var title: Variable<String> { get }
-    var firstname: Variable<String> { get }
-    var lastname: Variable<String> { get }
-    var phonenumber: Variable<String> { get }
+    var title: BehaviorRelay<String> { get }
+    var firstname: BehaviorRelay<String> { get }
+    var lastname: BehaviorRelay<String> { get }
+    var phonenumber: BehaviorRelay<String> { get }
     var submitButtonTapped: PublishSubject<Void> { get }
     var onShowLoadingHud: Observable<Bool> { get }
     var submitButtonEnabled: Observable<Bool> { get }
@@ -25,10 +26,10 @@ final class AddFriendViewModel: FriendViewModel {
     let onShowError = PublishSubject<SingleButtonAlert>()
     let submitButtonTapped = PublishSubject<Void>()
 
-    var title = Variable<String>("Add Friend")
-    var firstname = Variable<String>("")
-    var lastname = Variable<String>("")
-    var phonenumber = Variable<String>("")
+    var title = BehaviorRelay<String>(value: "Add Friend")
+    var firstname = BehaviorRelay<String>(value: "")
+    var lastname = BehaviorRelay<String>(value: "")
+    var phonenumber = BehaviorRelay<String>(value: "")
     var onShowLoadingHud: Observable<Bool> {
         return loadInProgress
             .asObservable()
@@ -39,7 +40,7 @@ final class AddFriendViewModel: FriendViewModel {
         return Observable.combineLatest(firstnameValid, lastnameValid, phoneNumberValid) { $0 && $1 && $2 }
     }
 
-    private let loadInProgress = Variable<Bool>(false)
+    private let loadInProgress = BehaviorRelay<Bool>(value: false)
     private let appServerClient: AppServerClient
     private let disposeBag = DisposeBag()
 
@@ -66,14 +67,14 @@ final class AddFriendViewModel: FriendViewModel {
     }
 
     private func postFriend() {
-        loadInProgress.value = true
+        loadInProgress.accept(true)
         appServerClient.postFriend(
             firstname: firstname.value,
             lastname: lastname.value,
             phonenumber: phonenumber.value)
             .subscribe(
                 onNext: { [weak self] _ in
-                    self?.loadInProgress.value = false
+                    self?.loadInProgress.accept(false)
                     self?.onNavigateBack.onNext(())
                 },
                 onError: { [weak self] error in
@@ -81,7 +82,7 @@ final class AddFriendViewModel: FriendViewModel {
                         return
                     }
 
-                    self.loadInProgress.value = false
+                    self.loadInProgress.accept(false)
 
                     let okAlert = SingleButtonAlert(
                         title: (error as? AppServerClient.PostFriendFailureReason)?.getErrorMessage() ?? "Could not connect to server. Check your network and try again later.",

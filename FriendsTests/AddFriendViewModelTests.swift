@@ -19,9 +19,9 @@ class AddFriendViewModelTests: XCTestCase {
         let viewModel = AddFriendViewModel(appServerClient: appServerClient)
 
         let mockFriend = Friend.with()
-        viewModel.firstname.value = mockFriend.firstname
-        viewModel.lastname.value = mockFriend.lastname
-        viewModel.phonenumber.value = mockFriend.phonenumber
+        viewModel.firstname.accept(mockFriend.firstname)
+        viewModel.lastname.accept(mockFriend.lastname)
+        viewModel.phonenumber.accept(mockFriend.phonenumber)
 
         let expectNavigateCall = expectation(description: "Navigate back is called")
 
@@ -44,9 +44,9 @@ class AddFriendViewModelTests: XCTestCase {
         let viewModel = AddFriendViewModel(appServerClient: appServerClient)
 
         let mockFriend = Friend.with()
-        viewModel.firstname.value = mockFriend.firstname
-        viewModel.lastname.value = mockFriend.lastname
-        viewModel.phonenumber.value = mockFriend.phonenumber
+        viewModel.firstname.accept(mockFriend.firstname)
+        viewModel.lastname.accept(mockFriend.lastname)
+        viewModel.phonenumber.accept(mockFriend.phonenumber)
 
         let expectErrorShown = expectation(description: "OnShowError is called")
 
@@ -67,9 +67,9 @@ class AddFriendViewModelTests: XCTestCase {
         let appServerClient = MockAppServerClient()
 
         let viewModel = AddFriendViewModel(appServerClient: appServerClient)
-        viewModel.firstname.value = mockFriend.firstname
-        viewModel.lastname.value = mockFriend.lastname
-        viewModel.phonenumber.value = mockFriend.phonenumber
+        viewModel.firstname.accept(mockFriend.firstname)
+        viewModel.lastname.accept(mockFriend.lastname)
+        viewModel.phonenumber.accept(mockFriend.phonenumber)
 
         let expectUpdateSubmitButtonStateCall = expectation(description: "updateSubmitButtonState is called")
 

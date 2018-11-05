@@ -60,9 +60,9 @@ class UpdateFriendViewModelTests: XCTestCase {
 
         let viewModel = UpdateFriendViewModel(friendCellViewModel: FriendCellViewModel(friend: friend), appServerClient: appServerClient)
 
-        viewModel.firstname.value = friend.firstname
-        viewModel.lastname.value = friend.lastname
-        viewModel.phonenumber.value = friend.phonenumber
+        viewModel.firstname.accept(friend.firstname)
+        viewModel.lastname.accept(friend.lastname)
+        viewModel.phonenumber.accept(friend.phonenumber)
 
         let expectUpdateSubmitButtonStateCall = expectation(description: "updateSubmitButtonState is called")
 

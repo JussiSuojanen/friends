@@ -10,6 +10,7 @@ import UIKit
 import PKHUD
 import RxSwift
 import RxSwiftExt
+import RxCocoa
 
 final class FriendViewController: UIViewController {
     @IBOutlet weak var textFieldFirstname: UITextField!
@@ -78,12 +79,12 @@ final class FriendViewController: UIViewController {
             .disposed(by: disposeBag)
     }
 
-    private func bind(textField: UITextField, to variable: Variable<String>) {
-        variable.asObservable()
+    private func bind(textField: UITextField, to behaviorRelay: BehaviorRelay<String>) {
+        behaviorRelay.asObservable()
             .bind(to: textField.rx.text)
             .disposed(by: disposeBag)
         textField.rx.text.unwrap()
-            .bind(to: variable)
+            .bind(to: behaviorRelay)
             .disposed(by: disposeBag)
     }
 

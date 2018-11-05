@@ -7,6 +7,7 @@
 //
 
 import RxSwift
+import RxCocoa
 
 enum FriendTableViewCellType {
     case normal(cellViewModel: FriendCellViewModel)
@@ -28,35 +29,35 @@ class FriendsTableViewViewModel {
     let appServerClient: AppServerClient
     let disposeBag = DisposeBag()
 
-    private let loadInProgress = Variable(false)
-    private let cells = Variable<[FriendTableViewCellType]>([])
+    private let loadInProgress = BehaviorRelay(value: false)
+    private let cells = BehaviorRelay<[FriendTableViewCellType]>(value: [])
 
     init(appServerClient: AppServerClient = AppServerClient()) {
         self.appServerClient = appServerClient
     }
 
     func getFriends() {
-        loadInProgress.value = true
+        loadInProgress.accept(true)
 
         appServerClient
             .getFriends()
             .subscribe(
                 onNext: { [weak self] friends in
-                    self?.loadInProgress.value = false
+                    self?.loadInProgress.accept(false)
                     guard friends.count > 0 else {
-                        self?.cells.value = [.empty]
+                        self?.cells.accept([.empty])
                         return
                     }
 
-                    self?.cells.value = friends.compactMap { .normal(cellViewModel: FriendCellViewModel(friend: $0 )) }
+                    self?.cells.accept(friends.compactMap { .normal(cellViewModel: FriendCellViewModel(friend: $0 )) })
                 },
                 onError: { [weak self] error in
-                    self?.loadInProgress.value = false
-                    self?.cells.value = [
+                    self?.loadInProgress.accept(false)
+                    self?.cells.accept([
                         .error(
                             message: (error as? AppServerClient.GetFriendsFailureReason)?.getErrorMessage() ?? "Loading failed, check network connection"
                         )
-                    ]
+                    ])
                 }
             )
             .disposed(by: disposeBag)

@@ -6,6 +6,7 @@
 //  Copyright © 2017 Jimmy. All rights reserved.
 //
 import RxSwift
+import RxCocoa
 
 final class UpdateFriendViewModel: FriendViewModel {
     let onShowError = PublishSubject<SingleButtonAlert>()
@@ -13,10 +14,10 @@ final class UpdateFriendViewModel: FriendViewModel {
     let submitButtonTapped = PublishSubject<Void>()
     let disposeBag = DisposeBag()
 
-    var title = Variable<String>("Update Friend")
-    var firstname = Variable<String>("")
-    var lastname = Variable<String>("")
-    var phonenumber = Variable<String>("")
+    var title = BehaviorRelay<String>(value: "Update Friend")
+    var firstname = BehaviorRelay<String>(value: "")
+    var lastname = BehaviorRelay<String>(value: "")
+    var phonenumber = BehaviorRelay<String>(value: "")
     var onShowLoadingHud: Observable<Bool> {
         return loadInProgress
             .asObservable()
@@ -27,7 +28,7 @@ final class UpdateFriendViewModel: FriendViewModel {
         return Observable.combineLatest(firstnameValid, lastnameValid, phoneNumberValid) { $0 && $1 && $2 }
     }
 
-    private let loadInProgress = Variable(false)
+    private let loadInProgress = BehaviorRelay(value: false)
     private let appServerClient: AppServerClient
     private let friendId: Int
 
@@ -42,9 +43,9 @@ final class UpdateFriendViewModel: FriendViewModel {
     }
 
     init(friendCellViewModel: FriendCellViewModel, appServerClient: AppServerClient = AppServerClient()) {
-        self.firstname.value = friendCellViewModel.firstname
-        self.lastname.value = friendCellViewModel.lastname
-        self.phonenumber.value = friendCellViewModel.phonenumber
+        self.firstname.accept(friendCellViewModel.firstname)
+        self.lastname.accept(friendCellViewModel.lastname)
+        self.phonenumber.accept(friendCellViewModel.phonenumber)
         self.friendId = friendCellViewModel.id
         self.appServerClient = appServerClient
 
@@ -56,7 +57,7 @@ final class UpdateFriendViewModel: FriendViewModel {
     }
 
     private func submitFriend() {
-        loadInProgress.value = true
+        loadInProgress.accept(true)
 
         appServerClient.patchFriend(
             firstname: firstname.value,
@@ -65,11 +66,11 @@ final class UpdateFriendViewModel: FriendViewModel {
             id: friendId)
             .subscribe(
                 onNext: { [weak self] friend in
-                    self?.loadInProgress.value = false
+                    self?.loadInProgress.accept(false)
                     self?.onNavigateBack.onNext(())
                 },
                 onError: { [weak self] error in
-                    self?.loadInProgress.value = false
+                    self?.loadInProgress.accept(false)
                     let okAlert = SingleButtonAlert(
                         title: (error as? AppServerClient.PatchFriendFailureReason)?.getErrorMessage() ?? "Could not connect to server. Check your network and try again later.",
                         message: "Failed to update information.",

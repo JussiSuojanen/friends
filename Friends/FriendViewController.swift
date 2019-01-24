@@ -57,14 +57,12 @@ final class FriendViewController: UIViewController {
 
         viewModel
             .onShowLoadingHud
-            .asObservable()
             .map { [weak self] in self?.setLoadingHud(visible: $0) }
             .subscribe()
             .disposed(by: disposeBag)
 
         viewModel
             .onNavigateBack
-            .asObservable()
             .subscribe(
                 onNext: { [weak self] in
                     self?.updateFriends.onNext(())

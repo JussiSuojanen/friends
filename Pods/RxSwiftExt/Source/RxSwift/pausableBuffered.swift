@@ -13,46 +13,51 @@ extension ObservableType {
 
     /**
      Pauses the elements of the source observable sequence based on the latest element from the second observable sequence.
-     
+
      While paused, elements from the source are buffered, limited to a maximum number of element.
-     
-     When resumed, all bufered elements are flushed as single events in a contiguous stream.
-     
+
+     When resumed, all buffered elements are flushed as single events in a contiguous stream.
+
      - seealso: [pausable operator on reactivex.io](http://reactivex.io/documentation/operators/backpressure.html)
-     
+
      - parameter pauser: The observable sequence used to pause the source observable sequence.
      - parameter limit: The maximum number of element buffered. Pass `nil` to buffer all elements without limit. Default 1.
-     - parameter flushOnCompleted: If `true` bufered elements will be flushed when the source completes. Default `true`.
-     - parameter flushOnError: If `true` bufered elements will be flushed when the source errors. Default `true`.
+     - parameter flushOnCompleted: If `true` buffered elements will be flushed when the source completes. Default `true`.
+     - parameter flushOnError: If `true` buffered elements will be flushed when the source errors. Default `true`.
      - returns: The observable sequence which is paused and resumed based upon the pauser observable sequence.
      */
-    public func pausableBuffered<P: ObservableType> (_ pauser: P, limit: Int? = 1, flushOnCompleted: Bool = true, flushOnError: Bool = true) -> Observable<E> where P.E == Bool {
+    public func pausableBuffered<Pauser: ObservableType> (_ pauser: Pauser, limit: Int? = 1, flushOnCompleted: Bool = true, flushOnError: Bool = true) -> Observable<Element> where Pauser.Element == Bool {
 
-        return Observable<E>.create { observer in
-            var buffer: [E] = []
+        return Observable<Element>.create { observer in
+            var buffer: [Element] = []
             if let limit = limit {
                 buffer.reserveCapacity(limit)
             }
 
             var paused = true
+            var flushIndex = 0
             let lock = NSRecursiveLock()
 
             let flush = {
-                for value in buffer {
-                    observer.onNext(value)
+                while flushIndex < buffer.count {
+                    flushIndex += 1
+                    observer.onNext(buffer[flushIndex - 1])
                 }
-                buffer.removeAll(keepingCapacity: limit != nil)
+                if buffer.count > 0 {
+                    flushIndex = 0
+                    buffer.removeAll(keepingCapacity: limit != nil)
+                }
             }
 
-            let boundaryDisposable = pauser.subscribe { event in
+            let boundaryDisposable = pauser.distinctUntilChanged(==).subscribe { event in
                 lock.lock(); defer { lock.unlock() }
                 switch event {
                 case .next(let resume):
-                    paused = !resume
-
                     if resume && buffer.count > 0 {
                         flush()
                     }
+                    paused = !resume
+
                 case .completed:
                     observer.onCompleted()
                 case .error(let error):

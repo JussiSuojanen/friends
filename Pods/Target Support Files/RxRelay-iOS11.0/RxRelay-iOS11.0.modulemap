@@ -1,0 +1,6 @@
+framework module RxRelay {
+  umbrella header "RxRelay-iOS11.0-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -1,0 +1,6 @@
+framework module RxSwiftExt {
+  umbrella header "RxSwiftExt-iOS9.1-umbrella.h"
+
+  export *
+  module * { export * }
+}

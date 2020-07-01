@@ -490,7 +490,7 @@
 					F4C5665D1DD0E9F600E61578 = {
 						CreatedOnToolsVersion = 8.1;
 						DevelopmentTeam = NXXGYEY744;
-						LastSwiftMigration = 1010;
+						LastSwiftMigration = 1150;
 						ProvisioningStyle = Automatic;
 					};
 					F4C566711DD0E9F600E61578 = {
@@ -512,6 +512,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -570,14 +571,15 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-FriendsTests/Pods-FriendsTests-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/Differentiator/Differentiator.framework",
-				"${BUILT_PRODUCTS_DIR}/PKHUD/PKHUD.framework",
-				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
-				"${BUILT_PRODUCTS_DIR}/RxDataSources/RxDataSources.framework",
-				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/RxSwiftExt/RxSwiftExt.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-FriendsTests/Pods-FriendsTests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire-iOS10.1/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/Differentiator-iOS10.1/Differentiator.framework",
+				"${BUILT_PRODUCTS_DIR}/PKHUD-iOS10.1/PKHUD.framework",
+				"${BUILT_PRODUCTS_DIR}/RxCocoa-iOS10.1/RxCocoa.framework",
+				"${BUILT_PRODUCTS_DIR}/RxDataSources-iOS10.1/RxDataSources.framework",
+				"${BUILT_PRODUCTS_DIR}/RxRelay-iOS10.1/RxRelay.framework",
+				"${BUILT_PRODUCTS_DIR}/RxSwift-iOS10.1/RxSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/RxSwiftExt-iOS10.1/RxSwiftExt.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -586,12 +588,13 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PKHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxDataSources.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxRelay.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwiftExt.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FriendsTests/Pods-FriendsTests-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FriendsTests/Pods-FriendsTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		0E78503827DAF989182F0F47 /* [CP] Embed Pods Frameworks */ = {
@@ -600,14 +603,15 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-Friends/Pods-Friends-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/Differentiator/Differentiator.framework",
-				"${BUILT_PRODUCTS_DIR}/PKHUD/PKHUD.framework",
-				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
-				"${BUILT_PRODUCTS_DIR}/RxDataSources/RxDataSources.framework",
-				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/RxSwiftExt/RxSwiftExt.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-Friends/Pods-Friends-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire-iOS9.1/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/Differentiator-iOS9.1/Differentiator.framework",
+				"${BUILT_PRODUCTS_DIR}/PKHUD-iOS9.1/PKHUD.framework",
+				"${BUILT_PRODUCTS_DIR}/RxCocoa-iOS9.1/RxCocoa.framework",
+				"${BUILT_PRODUCTS_DIR}/RxDataSources-iOS9.1/RxDataSources.framework",
+				"${BUILT_PRODUCTS_DIR}/RxRelay-iOS9.1/RxRelay.framework",
+				"${BUILT_PRODUCTS_DIR}/RxSwift-iOS9.1/RxSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/RxSwiftExt-iOS9.1/RxSwiftExt.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -616,12 +620,13 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PKHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxDataSources.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxRelay.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwiftExt.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Friends/Pods-Friends-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Friends/Pods-Friends-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		A3A5F7458736874544D61F2D /* [CP] Check Pods Manifest.lock */ = {
@@ -995,7 +1000,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Jimmy.Friends;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -1012,7 +1017,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Jimmy.Friends;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
